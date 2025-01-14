@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import logo from "../../assets/logo.png";
 
 const link = (
@@ -6,7 +6,7 @@ const link = (
     <NavLink className="hover:text-red-600 uppercase" to="/">
       Donation Requests
     </NavLink>
-    <NavLink className="hover:text-red-600 uppercase" to="/LostAndFound">
+    <NavLink className="hover:text-red-600 uppercase" to="/blog">
       Blog
     </NavLink>
   </>
@@ -23,7 +23,7 @@ const Nav = () => {
           {link}
         </div>
       </div>
-      <div>LOGIN</div>
+      <Link to="/login">LOGIN</Link>
 
       {/* <div className="flex-none">
       <div className="dropdown dropdown-end">
