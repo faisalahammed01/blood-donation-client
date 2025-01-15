@@ -8,6 +8,8 @@ import LayOut from "./Layout/Outlet/LayOut";
 import Login from "./LoginAndRegister/Login";
 import Register from "./LoginAndRegister/Register";
 import Blog from "./Pages/Blog";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
   {
@@ -36,7 +38,9 @@ const router = createBrowserRouter([
 ]);
 
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
-    <RouterProvider router={router} />
-  </StrictMode>
+  <QueryClientProvider client={queryClient}>
+    <StrictMode>
+      <RouterProvider router={router} />
+    </StrictMode>
+  </QueryClientProvider>
 );
