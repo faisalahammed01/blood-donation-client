@@ -1,8 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../Providers/AuthProvider";
 
 // import useAxiosPublic from "../Share/axiosPublic";
 
@@ -36,9 +37,40 @@ const Register = () => {
       return res.data;
     },
   });
+  const { createUser } = useContext(AuthContext);
+  const navigate = useNavigate();
+
   const onSubmit = (data) => {
-    console.log("Form Data:", data);
-    alert("Registration Successful!");
+    createUser(data.email, data.password)
+      .then((result) => {
+        const loggedUser = result.user;
+        console.log(loggedUser);
+        // updateUserProfile(data.name, data.photoUrl).then(() => {
+        // create user entry in the database
+        // const userInfo = {
+        //   name: data.name,
+        //   email: data.email,
+        // };
+        // axiosPublic.post("users", userInfo).then((res) => {
+        //   if (res.data.insertedId) {
+        //     reset();
+        //     Swal.fire({
+        //       position: "top-end",
+        //       icon: "success",
+        //       title: "User Created Successful",
+        //       showConfirmButton: false,
+        //       timer: 1500,
+        //     });
+        //     navigate("/");
+        //   }
+        // });
+
+        // });
+        navigate("/");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   // const imageFile = { image: data.image[0] }
@@ -69,8 +101,9 @@ const Register = () => {
                 <span className="label-text">Name</span>
               </label>
               <input
+                {...register("name", { required: true })}
                 type="text"
-                name=""
+                name="name"
                 placeholder="Name"
                 className="input input-bordered"
                 required
@@ -81,8 +114,9 @@ const Register = () => {
                 <span className="label-text">Email</span>
               </label>
               <input
+                {...register("email", { required: true })}
                 type="email"
-                name="Category"
+                name="email"
                 placeholder="Email"
                 className="input input-bordered"
                 required
@@ -96,8 +130,9 @@ const Register = () => {
                 <span className="label-text">Avatar</span>
               </label>
               <input
+                {...register("image", { required: true })}
                 type="file"
-                name="Thumbnail"
+                name="image"
                 placeholder="Avatar"
                 className="input input-bordered"
                 required
@@ -109,6 +144,7 @@ const Register = () => {
               </label>
               <select
                 defaultValue="default"
+                {...register("Blood", { required: true })}
                 name="Blood"
                 required
                 className="select select-bordered w-full "
@@ -134,6 +170,7 @@ const Register = () => {
                 <span className="label-text">District</span>
               </label>
               <select
+                {...register("Upazila", { required: true })}
                 className="select select-bordered"
                 name="Upazila"
                 value={selectedDistricts}
@@ -156,6 +193,7 @@ const Register = () => {
                 <span className="label-text">Upazila</span>
               </label>
               <select
+                {...register("Upazila", { required: true })}
                 className="select select-bordered"
                 name="Upazila"
                 value={selectedUpazila}
@@ -181,7 +219,7 @@ const Register = () => {
               </label>
               <input
                 type="password"
-                name="Contact"
+                name="password"
                 placeholder="Password"
                 {...register("password", { required: "Password is required" })}
                 className="input input-bordered"
@@ -194,7 +232,7 @@ const Register = () => {
               </label>
               <input
                 type="password"
-                name="Contact"
+                name="ConfirmPassword"
                 placeholder="Confirm_password"
                 className="input input-bordered"
                 {...register("confirmPassword", {

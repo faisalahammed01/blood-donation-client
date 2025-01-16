@@ -9,6 +9,8 @@ import Login from "./LoginAndRegister/Login";
 import Register from "./LoginAndRegister/Register";
 import Blog from "./Pages/Blog";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import AuthProvider from "./Providers/AuthProvider";
+import Dashboard from "./Dashboard/Dashboard";
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
@@ -28,19 +30,25 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/login",
+    path: "login",
     element: <Login></Login>,
   },
   {
-    path: "/singUp",
+    path: "singUp",
     element: <Register></Register>,
+  },
+  {
+    path: "dashboard",
+    element: <Dashboard></Dashboard>,
   },
 ]);
 
 createRoot(document.getElementById("root")).render(
-  <QueryClientProvider client={queryClient}>
-    <StrictMode>
-      <RouterProvider router={router} />
-    </StrictMode>
-  </QueryClientProvider>
+  <StrictMode>
+    <AuthProvider>
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+      </QueryClientProvider>
+    </AuthProvider>
+  </StrictMode>
 );
