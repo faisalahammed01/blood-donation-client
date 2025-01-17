@@ -11,6 +11,8 @@ import Blog from "./Pages/Blog";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import AuthProvider from "./Providers/AuthProvider";
 import Dashboard from "./Dashboard/Dashboard";
+import PrivateRoute from "./Providers/PrivateRoute";
+import Profile from "./Dashboard/Profile";
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
@@ -39,7 +41,23 @@ const router = createBrowserRouter([
   },
   {
     path: "dashboard",
-    element: <Dashboard></Dashboard>,
+    element: (
+      <PrivateRoute>
+        <Dashboard></Dashboard>
+      </PrivateRoute>
+    ),
+    children: [
+      // By default
+      {
+        path: "/dashboard/profile",
+        element: <Profile></Profile>,
+      },
+      // ----------------Admin----------------------
+
+      // -----------------Donor----------------------
+
+      // ----------------Volunteer-----------------------
+    ],
   },
 ]);
 

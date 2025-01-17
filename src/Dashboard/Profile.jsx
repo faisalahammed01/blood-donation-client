@@ -2,26 +2,21 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
+import { FaEdit } from "react-icons/fa";
 import { AuthContext } from "../Providers/AuthProvider";
 
-// import useAxiosPublic from "../Share/axiosPublic";
-
-// const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
-// const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
-
-const Register = () => {
+const Profile = () => {
   const [selectedUpazila, setSelectedUpazila] = useState("");
   const [selectedDistricts, setSelectedDistricts] = useState("");
+  const [user] = useContext(AuthContext);
 
   const {
     register,
-    handleSubmit,
+
     reset,
-    watch,
+
     formState: { errors },
   } = useForm();
-  const password = watch("password");
 
   const { data: upazilas = [], isLoading } = useQuery({
     queryKey: ["Upazilas"],
@@ -37,63 +32,14 @@ const Register = () => {
       return res.data;
     },
   });
-  const { createUser } = useContext(AuthContext);
-  const navigate = useNavigate();
-
-  const onSubmit = (data) => {
-    createUser(data.email, data.password)
-      .then((result) => {
-        const loggedUser = result.user;
-        console.log(loggedUser);
-        // updateUserProfile(data.name, data.photoUrl).then(() => {
-        // create user entry in the database
-        // const userInfo = {
-        //   name: data.name,
-        //   email: data.email,
-        // };
-        // axiosPublic.post("users", userInfo).then((res) => {
-        //   if (res.data.insertedId) {
-        //     reset();
-        //     Swal.fire({
-        //       position: "top-end",
-        //       icon: "success",
-        //       title: "User Created Successful",
-        //       showConfirmButton: false,
-        //       timer: 1500,
-        //     });
-        //     navigate("/");
-        //   }
-        // });
-
-        // });
-        navigate("/");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  // const imageFile = { image: data.image[0] }
-  // const res = await useAxiosPublic.post(image_hosting_api, imageFile, {
-  //     headers: {
-  //         'content-type': 'multipart/form-data'
-  //     }
-  // });
-
-  if (isLoading)
-    return <span className="loading loading-spinner loading-lg"></span>;
 
   return (
     <div className="lg:w-3/4 mx-auto">
-      <div className="text-center p-10">
-        <img
-          className="size-36"
-          src="https://i.ibb.co.com/2Yc4sXv/register-here-en-no-sign-260nw-160430507-webp-260-280-01-14-2025-04-01-PM-removebg-preview.png"
-          alt=""
-        />
-      </div>
       <div className="card bg-base-100 w-full shrink-0 shadow-2xl">
-        <form onSubmit={handleSubmit(onSubmit)} className="card-body">
+        <div className="justify-start">
+          <FaEdit className="text-2xl text-red-500"></FaEdit>
+        </div>
+        <form className="card-body">
           {/* form first row */}
           <div className="flex flex-col lg:flex-row gap-5">
             <div className="form-control flex-1">
@@ -104,7 +50,7 @@ const Register = () => {
                 {...register("name", { required: true })}
                 type="text"
                 name="name"
-                placeholder="Name"
+                placeholder={user?.name}
                 className="input input-bordered"
                 required
               />
@@ -211,59 +157,16 @@ const Register = () => {
               </select>
             </div>
           </div>
-          {/* form four row */}
-          <div className="flex flex-col lg:flex-row gap-5">
-            <div className="form-control flex-1">
-              <label className="label">
-                <span className="label-text">Password</span>
-              </label>
-              <input
-                type="password"
-                name="password"
-                placeholder="Password"
-                {...register("password", { required: "Password is required" })}
-                className="input input-bordered"
-                required
-              />
-            </div>
-            <div className="form-control flex-1">
-              <label className="label">
-                <span className="label-text">Confirm_password</span>
-              </label>
-              <input
-                type="password"
-                name="ConfirmPassword"
-                placeholder="Confirm_password"
-                className="input input-bordered"
-                {...register("confirmPassword", {
-                  required: "Confirm Password is required",
-                  validate: (value) =>
-                    value === password || "Passwords do not match",
-                })}
-                required
-              />
-            </div>
-          </div>
-          {errors.confirmPassword && (
-            <p className="text-red-600 mt-2">
-              {errors.confirmPassword.message}
-            </p>
-          )}
+
           <div className="form-control mt-6">
             <button className="btn btn-outline text-white font-bold bg-red-800 hover:bg-red-950">
-              Register
+              Save
             </button>
           </div>
-          <p className="text-start mt-4">
-            Have an account?
-            <Link className="text-red-600" to="/login">
-              Log in now!
-            </Link>
-          </p>
         </form>
       </div>
     </div>
   );
 };
 
-export default Register;
+export default Profile;
