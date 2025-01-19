@@ -1,16 +1,13 @@
+import { useForm } from "react-hook-form";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useContext, useState } from "react";
-import { useForm } from "react-hook-form";
-import { FaEdit } from "react-icons/fa";
-import { AuthContext } from "../Providers/AuthProvider";
+import { AuthContext } from "../../Providers/AuthProvider";
 
-const Profile = () => {
+const Create = () => {
   const [selectedUpazila, setSelectedUpazila] = useState("");
   const [selectedDistricts, setSelectedDistricts] = useState("");
-  const [isEditable, setIsEditable] = useState(false);
   const { user } = useContext(AuthContext);
-  // todo-----send data database-
   const {
     register,
 
@@ -18,8 +15,6 @@ const Profile = () => {
 
     formState: { errors },
   } = useForm();
-  // -------------------------------------UPAZILAS____DISTRICTS------------------------------------------------------------
-
   const { data: upazilas = [], isLoading } = useQuery({
     queryKey: ["Upazilas"],
     queryFn: async () => {
@@ -34,16 +29,10 @@ const Profile = () => {
       return res.data;
     },
   });
-  // --------------------------------------------------------------------------------------
-  const onSubmit = (data) => {
-    setIsEditable(false);
-  };
-
   return (
     <div className="lg:w-3/4 mx-auto">
       <div className="card bg-base-100 w-full shrink-0 shadow-2xl">
         <form className="card-body">
-          {/* form first row */}
           <div className="flex flex-col lg:flex-row gap-5">
             <div className="form-control flex-1">
               <label className="label">
@@ -53,10 +42,8 @@ const Profile = () => {
                 {...register("name", { required: true })}
                 type="text"
                 name="name"
-                disabled={!isEditable}
                 placeholder="Name"
                 className="input input-bordered"
-                defaultValue={user?.displayName}
                 required
               />
             </div>
@@ -68,10 +55,36 @@ const Profile = () => {
                 {...register("email", { required: true })}
                 type="email"
                 name="email"
-                disabled={!isEditable}
-                defaultValue={user?.email}
                 placeholder="Email"
-                readOnly
+                className="input input-bordered"
+                required
+              />
+            </div>
+          </div>
+          {/* form first row */}
+          <div className="flex flex-col lg:flex-row gap-5">
+            <div className="form-control flex-1">
+              <label className="label">
+                <span className="label-text">Recipient-Name</span>
+              </label>
+              <input
+                {...register("recipientName", { required: true })}
+                type="text"
+                name="recipientName"
+                placeholder="Recipient-Name"
+                className="input input-bordered"
+                required
+              />
+            </div>
+            <div className="form-control flex-1">
+              <label className="label">
+                <span className="label-text">Full-Address</span>
+              </label>
+              <input
+                {...register("Address", { required: true })}
+                type="text"
+                name="address"
+                placeholder="Address"
                 className="input input-bordered"
                 required
               />
@@ -81,15 +94,13 @@ const Profile = () => {
           <div className="flex flex-col lg:flex-row gap-5">
             <div className="form-control flex-1">
               <label className="label">
-                <span className="label-text">Avatar</span>
+                <span className="label-text">Hospital-Name</span>
               </label>
               <input
-                {...register("image", { required: true })}
-                type="url"
-                name="image"
-                disabled={!isEditable}
-                placeholder="Avatar"
-                defaultValue={user?.photoURL}
+                {...register("hospitalName", { required: true })}
+                type="text"
+                name="hospitalName"
+                placeholder="Hospital-Name"
                 className="input input-bordered"
                 required
               />
@@ -103,7 +114,6 @@ const Profile = () => {
                 {...register("Blood", { required: true })}
                 name="Blood"
                 required
-                disabled={!isEditable}
                 className="select select-bordered w-full "
               >
                 <option disabled value="default">
@@ -124,14 +134,13 @@ const Profile = () => {
           <div className="flex flex-col lg:flex-row gap-5">
             <div className="form-control flex-1">
               <label className="label">
-                <span className="label-text">District</span>
+                <span className="label-text">Recipient-District</span>
               </label>
               <select
                 {...register("District", { required: true })}
                 className="select select-bordered"
                 name="District"
                 value={selectedDistricts}
-                disabled={!isEditable}
                 onChange={(e) => setSelectedDistricts(e.target.value)}
                 required
               >
@@ -148,13 +157,12 @@ const Profile = () => {
             {/*------------------------------//-------------------------------------------- */}
             <div className="form-control flex-1">
               <label className="label">
-                <span className="label-text">Upazila</span>
+                <span className="label-text">Recipient-Upazila</span>
               </label>
               <select
                 {...register("Upazila", { required: true })}
                 className="select select-bordered"
                 name="Upazila"
-                disabled={!isEditable}
                 value={selectedUpazila}
                 onChange={(e) => setSelectedUpazila(e.target.value)}
                 required
@@ -170,24 +178,54 @@ const Profile = () => {
               </select>
             </div>
           </div>
+          {/* form four row */}
+          <div className="flex flex-col lg:flex-row gap-5">
+            <div className="form-control flex-1">
+              <label className="label">
+                <span className="label-text">Donation-Date</span>
+              </label>
+              <input
+                {...register("date", { required: true })}
+                type="date"
+                name="date"
+                placeholder="date"
+                className="input input-bordered"
+                required
+              />
+            </div>
+            <div className="form-control flex-1">
+              <label className="label">
+                <span className="label-text">Donation-Time</span>
+              </label>
+              <input
+                {...register("time", { required: true })}
+                type="time"
+                name="time"
+                placeholder="time"
+                className="input input-bordered"
+                required
+              />
+            </div>
+          </div>
+          {/* requestMessage */}
+          <div className="form-control flex-1">
+            <label className="label">
+              <span className="label-text">Request-Message</span>
+            </label>
+            <input
+              {...register("message", { required: true })}
+              type="text"
+              name="message"
+              placeholder="Request-Message"
+              className="input input-bordered"
+              required
+            />
+          </div>
 
-          <div className="flex justify-center mt-6">
-            {isEditable ? (
-              <button
-                type="submit"
-                className="btn btn-outline text-white font-bold bg-red-800 hover:bg-red-950"
-              >
-                Save
-              </button>
-            ) : (
-              <button
-                type="button"
-                onClick={() => setIsEditable(true)}
-                className="btn btn-outline text-white font-bold bg-blue-800 hover:bg-blue-950"
-              >
-                <FaEdit className="mr-2" /> Edit
-              </button>
-            )}
+          <div className="form-control mt-6">
+            <button className="btn btn-outline text-white font-bold bg-red-800 hover:bg-red-950">
+              Submit Request
+            </button>
           </div>
         </form>
       </div>
@@ -195,4 +233,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default Create;

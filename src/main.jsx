@@ -13,6 +13,7 @@ import AuthProvider from "./Providers/AuthProvider";
 import Dashboard from "./Dashboard/Dashboard";
 import PrivateRoute from "./Providers/PrivateRoute";
 import Profile from "./Dashboard/Profile";
+import Create from "./Dashboard/Donor/Create";
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
@@ -55,7 +56,10 @@ const router = createBrowserRouter([
       // ----------------Admin----------------------
 
       // -----------------Donor----------------------
-
+      {
+        path: "/dashboard/DonorCreate",
+        element: <Create></Create>,
+      },
       // ----------------Volunteer-----------------------
     ],
   },

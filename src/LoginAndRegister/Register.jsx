@@ -4,13 +4,14 @@ import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Providers/AuthProvider";
+import useAxiosPublic from "../Share/axiosPublic";
+import Swal from "sweetalert2";
 
-// import useAxiosPublic from "../Share/axiosPublic";
-
-// const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
-// const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
+const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
+const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 
 const Register = () => {
+  const axiosPublic = useAxiosPublic();
   const [selectedUpazila, setSelectedUpazila] = useState("");
   const [selectedDistricts, setSelectedDistricts] = useState("");
 
@@ -37,48 +38,51 @@ const Register = () => {
       return res.data;
     },
   });
-  const { createUser } = useContext(AuthContext);
+  const { createUser, updateUserProfile } = useContext(AuthContext);
   const navigate = useNavigate();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const onSubmit = (data) => {
-    createUser(data.email, data.password)
-      .then((result) => {
-        const loggedUser = result.user;
-        console.log(loggedUser);
-        // updateUserProfile(data.name, data.photoUrl).then(() => {
-        // create user entry in the database
-        // const userInfo = {
-        //   name: data.name,
-        //   email: data.email,
-        // };
-        // axiosPublic.post("users", userInfo).then((res) => {
-        //   if (res.data.insertedId) {
-        //     reset();
-        //     Swal.fire({
-        //       position: "top-end",
-        //       icon: "success",
-        //       title: "User Created Successful",
-        //       showConfirmButton: false,
-        //       timer: 1500,
-        //     });
-        //     navigate("/");
-        //   }
-        // });
+  const onSubmit = async (data) => {
+    if (isSubmitting) return;
+    setIsSubmitting(true);
+    const formData = new FormData();
+    formData.append("image", data.image[0]);
 
-        // });
-        navigate("/");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const imageRes = await axiosPublic.post(image_hosting_api, formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+
+    if (imageRes.data.success) {
+      const imageUrl = imageRes.data.data.url;
+
+      const userInfo = {
+        name: data.name,
+        email: data.email,
+        photoURL: imageUrl,
+        bloodGroup: data.Blood,
+        district: selectedDistricts,
+        upazila: selectedUpazila,
+      };
+
+      const userCredential = await createUser(data.email, data.password);
+      if (userCredential.user) {
+        await updateUserProfile(data.name, imageUrl);
+
+        const userRes = await axiosPublic.post("/users", userInfo);
+        if (userRes.data.insertedId) {
+          reset();
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "User Created Successfully",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          navigate("/");
+        }
+      }
+    }
   };
-
-  // const imageFile = { image: data.image[0] }
-  // const res = await useAxiosPublic.post(image_hosting_api, imageFile, {
-  //     headers: {
-  //         'content-type': 'multipart/form-data'
-  //     }
-  // });
 
   if (isLoading)
     return <span className="loading loading-spinner loading-lg"></span>;
@@ -181,7 +185,7 @@ const Register = () => {
                   Select District
                 </option>
                 {districts.map((district) => (
-                  <option key={district.id} value={district.id}>
+                  <option key={district.id} value={district.name}>
                     {district.name}
                   </option>
                 ))}
@@ -204,7 +208,7 @@ const Register = () => {
                   Select Upazila
                 </option>
                 {upazilas.map((upazila) => (
-                  <option key={upazila.id} value={upazila.id}>
+                  <option key={upazila.id} value={upazila.name}>
                     {upazila.name}
                   </option>
                 ))}
@@ -250,8 +254,11 @@ const Register = () => {
             </p>
           )}
           <div className="form-control mt-6">
-            <button className="btn btn-outline text-white font-bold bg-red-800 hover:bg-red-950">
-              Register
+            <button
+              className="btn btn-outline text-white font-bold bg-red-800 hover:bg-red-950"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Registering..." : "Register"}
             </button>
           </div>
           <p className="text-start mt-4">
