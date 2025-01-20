@@ -3,20 +3,9 @@ import Swal from "sweetalert2";
 
 const Update = () => {
   const data = useLoaderData();
-  console.log(data);
+  //   console.log(data);
 
-  const {
-    Blood,
-
-    address,
-    date,
-    email,
-
-    name,
-
-    time,
-    _id,
-  } = data;
+  const { Blood, address, date, email, name, time, _id } = data;
 
   const handleUpdate = (e) => {
     e.preventDefault();
@@ -91,7 +80,7 @@ const Update = () => {
                 defaultValue={email}
                 type="text"
                 readOnly
-                className="input input-bordered text-red-800"
+                className="input input-bordered"
                 required
               />
             </div>

@@ -1,15 +1,15 @@
 import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../../Providers/AuthProvider";
+
 import { FaEdit, FaEye, FaTrash } from "react-icons/fa";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../Providers/AuthProvider";
 
-const DonorHome = () => {
+const MyDonation = () => {
   const [donners, setDonner] = useState([]);
   const { user } = useContext(AuthContext);
   //! -------------delete---------------------------------
-  //   const Item = useLoaderData();
-  //   const [MyItem, SetItem] = useState(Item);
+
   const handleUserDelete = (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -47,7 +47,7 @@ const DonorHome = () => {
 
   useEffect(() => {
     if (user?.email) {
-      fetch(`http://localhost:5000/MyDonation?email=${user.email}`)
+      fetch(`http://localhost:5000/MyDonations?email=${user.email}`)
         .then((res) => res.json())
         .then((donner) => setDonner(donner));
     }
@@ -92,7 +92,7 @@ const DonorHome = () => {
                 <td>{donner?.date}</td>
                 <td>{donner?.time}</td>
                 <td>{donner?.Blood}</td>
-                <td className="font-bold">{donner?.status}</td>
+                <td>{donner?.status}</td>
                 <td className=" px-4 py-2 flex gap-2">
                   {donner.status === "pending" && (
                     <>
@@ -132,14 +132,8 @@ const DonorHome = () => {
           </tbody>
         </table>
       </div>
-      <Link
-        to="/dashboard/DonorMy"
-        className=" my-4 ml-4 text-red-600 btn btn-link text-xl "
-      >
-        view my all request
-      </Link>
     </>
   );
 };
 
-export default DonorHome;
+export default MyDonation;
