@@ -16,6 +16,7 @@ import Profile from "./Dashboard/Profile";
 import Create from "./Dashboard/Donor/Create";
 import DonorHome from "./Dashboard/Donor/DonorHome";
 import Request from "./Dashboard/Donor/Request";
+import Update from "./Dashboard/Donor/Update";
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
@@ -65,11 +66,17 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/Home",
         element: <DonorHome></DonorHome>,
-        // loader: () => fetch("http://localhost:5000/MyDonation"),
+        // loader: () => fetch("http://localhost:5000/DonationUp"),
       },
       {
         path: "/dashboard/DonorMy",
         element: <Request></Request>,
+      },
+      {
+        path: "/dashboard/update/:id",
+        element: <Update></Update>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/DonationUp/${params.id}`),
       },
       // ----------------Volunteer-----------------------
     ],

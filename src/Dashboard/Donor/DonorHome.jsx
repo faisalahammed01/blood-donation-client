@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../Providers/AuthProvider";
 import { FaEdit, FaEye, FaTrash } from "react-icons/fa";
 import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 
 const DonorHome = () => {
   const [donners, setDonner] = useState([]);
@@ -50,7 +51,7 @@ const DonorHome = () => {
         .then((res) => res.json())
         .then((donner) => setDonner(donner));
     }
-  }, [user?.email]);
+  }, [user]);
   return (
     <>
       <div>
@@ -95,9 +96,12 @@ const DonorHome = () => {
                 <td className=" px-4 py-2 flex gap-2">
                   {donner.status === "pending" && (
                     <>
-                      <button className="bg-blue-500 text-white px-2 py-1 rounded">
+                      <Link
+                        to={`/dashboard/update/${donner._id}`}
+                        className="bg-blue-500 text-white px-2 py-1 rounded"
+                      >
                         <FaEdit></FaEdit>
-                      </button>
+                      </Link>
                       <button
                         onClick={() => handleUserDelete(donner._id)}
                         className="bg-red-500 text-white px-2 py-1 rounded"
