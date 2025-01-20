@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../Providers/AuthProvider";
+import Swal from "sweetalert2";
 
 const Create = () => {
   const [selectedUpazila, setSelectedUpazila] = useState("");
@@ -10,7 +11,7 @@ const Create = () => {
   const { user } = useContext(AuthContext);
   const {
     register,
-
+    handleSubmit,
     reset,
 
     formState: { errors },
@@ -29,35 +30,55 @@ const Create = () => {
       return res.data;
     },
   });
+  //   --------------------------------------------------------------------------------------
+  const onSubmit = (data) => {
+    data.status = "pending";
+    axios.post("http://localhost:5000/recipient", data).then((res) => {
+      if (res.data.insertedId) {
+        reset();
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "User Created Successfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    });
+  };
   return (
     <div className="lg:w-3/4 mx-auto">
       <div className="card bg-base-100 w-full shrink-0 shadow-2xl">
-        <form className="card-body">
+        <form onSubmit={handleSubmit(onSubmit)} className="card-body">
           <div className="flex flex-col lg:flex-row gap-5">
             <div className="form-control flex-1">
               <label className="label">
-                <span className="label-text">Name</span>
+                <span className="label-text text-red-800">Name</span>
               </label>
               <input
                 {...register("name", { required: true })}
                 type="text"
                 name="name"
+                defaultValue={user?.displayName}
                 placeholder="Name"
                 className="input input-bordered"
                 required
+                readOnly
               />
             </div>
             <div className="form-control flex-1">
               <label className="label">
-                <span className="label-text">Email</span>
+                <span className="label-text text-red-800">Email</span>
               </label>
               <input
                 {...register("email", { required: true })}
                 type="email"
                 name="email"
+                defaultValue={user?.email}
                 placeholder="Email"
                 className="input input-bordered"
                 required
+                readOnly
               />
             </div>
           </div>
@@ -81,7 +102,7 @@ const Create = () => {
                 <span className="label-text">Full-Address</span>
               </label>
               <input
-                {...register("Address", { required: true })}
+                {...register("address", { required: true })}
                 type="text"
                 name="address"
                 placeholder="Address"
@@ -218,7 +239,6 @@ const Create = () => {
               name="message"
               placeholder="Request-Message"
               className="input input-bordered"
-              required
             />
           </div>
 

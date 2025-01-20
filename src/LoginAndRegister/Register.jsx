@@ -62,6 +62,7 @@ const Register = () => {
         bloodGroup: data.Blood,
         district: selectedDistricts,
         upazila: selectedUpazila,
+        status: "Active",
       };
 
       const userCredential = await createUser(data.email, data.password);
