@@ -4,10 +4,13 @@ import { FaEdit, FaEye, FaTrash } from "react-icons/fa";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProvider";
+import ReactPaginate from "react-paginate";
 
 const MyDonation = () => {
   const [donners, setDonner] = useState([]);
+  const [currentDonners, setCurrentDonners] = useState([]);
   const { user } = useContext(AuthContext);
+  const itemsPerPage = 4;
   //! -------------delete---------------------------------
 
   const handleUserDelete = (id) => {
@@ -43,6 +46,44 @@ const MyDonation = () => {
       }
     });
   };
+  // --------------------------------------------------------------------------------------------
+  const handleStatusUp = (id, newStatus) => {
+    if (!id) return;
+
+    Swal.fire({
+      title: `Are you sure you want to mark this as ${newStatus}?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: `Yes, ${newStatus}!`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`http://localhost:5000/upDonationStatus/${id}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ status: newStatus }),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.modifiedCount > 0) {
+              Swal.fire({
+                title: "Updated!",
+                text: `The status has been changed to ${newStatus}`,
+                icon: "success",
+              });
+
+              const updatedDonners = donners.map((donner) =>
+                donner._id === id ? { ...donner, status: newStatus } : donner
+              );
+              setDonner(updatedDonners);
+            }
+          });
+      }
+    });
+  };
   // ----------------------------------------------------------------------------------------------
 
   useEffect(() => {
@@ -52,6 +93,16 @@ const MyDonation = () => {
         .then((donner) => setDonner(donner));
     }
   }, [user]);
+  // -----------------------------Pagination-----------------------------------
+  const handlePageClick = (event) => {
+    const selectedPage = event.selected;
+    const offset = selectedPage * itemsPerPage;
+    setCurrentDonners(donners.slice(offset, offset + itemsPerPage));
+  };
+
+  useEffect(() => {
+    setCurrentDonners(donners.slice(0, itemsPerPage));
+  }, [donners]);
   return (
     <>
       <div>
@@ -84,7 +135,7 @@ const MyDonation = () => {
 
           <tbody>
             {/* row  */}
-            {donners.map((donner, i) => (
+            {currentDonners.map((donner, i) => (
               <tr key={donner._id}>
                 <td>{i + 1}</td>
                 <td>{donner?.recipientName}</td>
@@ -112,10 +163,16 @@ const MyDonation = () => {
                   )}
                   {donner.status === "inprogress" && (
                     <>
-                      <button className="bg-green-500 text-white px-2 py-1 rounded">
+                      <button
+                        onClick={() => handleStatusUp(donner._id, "done")}
+                        className="bg-green-500 text-white px-2 py-1 rounded"
+                      >
                         Done
                       </button>
-                      <button className="bg-gray-500 text-white px-2 py-1 rounded">
+                      <button
+                        onClick={() => handleStatusUp(donner._id, "done")}
+                        className="bg-gray-500 text-white px-2 py-1 rounded"
+                      >
                         Cancel
                       </button>
                     </>
@@ -131,6 +188,18 @@ const MyDonation = () => {
             ))}
           </tbody>
         </table>
+        {/* --------------Pagination------------------------------------ */}
+
+        <ReactPaginate
+          previousLabel={"< previous"}
+          nextLabel={"next >"}
+          pageCount={Math.ceil(donners.length / itemsPerPage)}
+          onPageChange={handlePageClick}
+          containerClassName=" mt-8 flex justify-center space-x-2"
+          pageClassName="py-2 px-4 border rounded"
+          pageLinkClassName="text-gray-700"
+          activeClassName="bg-red-500 text-white"
+        />
       </div>
     </>
   );

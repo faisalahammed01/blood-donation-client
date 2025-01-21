@@ -19,8 +19,6 @@ const Detailas = () => {
     Blood,
     address,
     date,
-    email,
-    name,
     time,
     _id,
     message,
@@ -36,7 +34,7 @@ const Detailas = () => {
   const handleModalClose = () => {
     document.getElementById("my_modal_1").close();
   };
-  //   -----------------------------
+  //   ------------------------------------------------------------------------------
   useEffect(() => {
     if (!_id) return;
 
@@ -48,7 +46,7 @@ const Detailas = () => {
         console.log(res.data);
       });
   }, [_id]);
-  //   --------------------------------
+  //   ---------------------------------------------------------------------------------
   const [isConfirm, setConfirm] = useState(false);
   const onSubmit = (data) => {
     if (isConfirm) return;

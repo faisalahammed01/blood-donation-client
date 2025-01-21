@@ -6,6 +6,9 @@ import { AuthContext } from "../../Providers/AuthProvider";
 const link = (
   <>
     <NavLink className="hover:text-red-600 uppercase" to="/">
+      Home
+    </NavLink>
+    <NavLink className="hover:text-red-600 uppercase" to="/DonationRequest">
       Donation Requests
     </NavLink>
     <NavLink className="hover:text-red-600 uppercase" to="/blog">

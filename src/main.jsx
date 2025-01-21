@@ -18,6 +18,7 @@ import DonorHome from "./Dashboard/Donor/DonorHome";
 import Update from "./Dashboard/Donor/Update";
 import Detailas from "./Dashboard/Donor/Detailas";
 import MyDonation from "./Dashboard/Donor/MyDonation";
+import DonationRequrest from "./Layout/Donation/DonationRequrest";
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
       {
         path: "/blog",
         element: <Blog></Blog>,
+      },
+      {
+        path: "/DonationRequest",
+        element: <DonationRequrest></DonationRequrest>,
       },
     ],
   },
