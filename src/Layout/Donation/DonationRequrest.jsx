@@ -1,5 +1,5 @@
-import { useContext, useEffect, useState } from "react";
-import { FaEdit, FaEye, FaTrash } from "react-icons/fa";
+import { useContext, useState } from "react";
+import { FaEye } from "react-icons/fa";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProvider";
@@ -84,23 +84,12 @@ const DonationRequrest = () => {
 
   // ----------------------------------------------------------------------------------------------
 
-  useEffect(() => {
-    if (user?.email) {
-      fetch(`http://localhost:5000/MyDonation?email=${user.email}`)
-        .then((res) => res.json())
-        .then((donner) => setDonner(donner));
-    }
-  }, [user]);
+  fetch(`http://localhost:5000/DonationRequrest`)
+    .then((res) => res.json())
+    .then((donner) => setDonner(donner));
+
   return (
     <>
-      <div>
-        <h2 className="text-2xl text-center text-red-950">
-          {" "}
-          -------------------- Welcome {user?.displayName}
-          --------------------
-        </h2>
-        <div className="divider "></div>
-      </div>
       {/* -------------------------------Table----------------------- */}
       <h1 className="text-xl font-bold text-center my-4 text-red-900">
         {donners.length === 0 && "---- No donations found ---- "}
@@ -123,66 +112,34 @@ const DonationRequrest = () => {
 
           <tbody>
             {/* row  */}
-            {donners.map((donner, i) => (
-              <tr key={donner._id}>
-                <td>{i + 1}</td>
-                <td>{donner?.recipientName}</td>
-                <td>{donner?.hospitalName}</td>
-                <td>{donner?.date}</td>
-                <td>{donner?.time}</td>
-                <td>{donner?.Blood}</td>
-                <td className="font-bold">{donner?.status}</td>
-                <td className=" px-4 py-2 flex gap-2">
-                  {donner.status === "pending" && (
-                    <>
-                      <Link
-                        to={`/dashboard/update/${donner._id}`}
-                        className="bg-blue-500 text-white px-2 py-1 rounded"
-                      >
-                        <FaEdit></FaEdit>
-                      </Link>
-                      <button
-                        onClick={() => handleUserDelete(donner._id)}
-                        className="bg-red-500 text-white px-2 py-1 rounded"
-                      >
-                        <FaTrash></FaTrash>
-                      </button>
-                    </>
-                  )}
-                  {donner.status === "inprogress" && (
-                    <>
-                      <button
-                        onClick={() => handleStatusUp(donner._id, "done")}
-                        className="bg-green-500 text-white px-2 py-1 rounded"
-                      >
-                        Done
-                      </button>
-                      <button
-                        onClick={() => handleStatusUp(donner._id, "cancelled")}
-                        className="bg-gray-500 text-white px-2 py-1 rounded"
-                      >
-                        Cancel
-                      </button>
-                    </>
-                  )}
-                  <Link
-                    to={`/dashboard/details/${donner._id}`}
-                    className="bg-black text-white px-2 py-1 rounded"
-                  >
-                    <FaEye></FaEye>
-                  </Link>
-                </td>
-              </tr>
-            ))}
+            {donners
+              .filter((donner) => donner.status === "pending")
+              .map((donner, i) => (
+                <tr key={donner._id}>
+                  <td>{i + 1}</td>
+                  <td>{donner?.recipientName}</td>
+                  <td>{donner?.hospitalName}</td>
+                  <td>{donner?.date}</td>
+                  <td>{donner?.time}</td>
+                  <td>{donner?.Blood}</td>
+                  <td className="font-bold">{donner?.status}</td>
+                  <td className=" px-4 py-2 flex gap-2">
+                    {donner.status === "pending" && (
+                      <>
+                        <Link
+                          to={`/dashboard/details/${donner._id}`}
+                          className="bg-black text-white px-2 py-1 rounded"
+                        >
+                          <FaEye></FaEye>
+                        </Link>
+                      </>
+                    )}
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>
-      <Link
-        to="/dashboard/DonorMy"
-        className=" my-4 ml-4 text-red-600 btn btn-link text-xl "
-      >
-        view my all request
-      </Link>
     </>
   );
 };

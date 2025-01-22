@@ -68,17 +68,17 @@ const Dashboard = () => {
             <>
               {/* -------------------------------Donor--------------------------------- */}
               <li>
-                <Link to="/dashboard/Home" className="text-white">
+                <Link to="Home" className="text-white">
                   <FaHome></FaHome> Donor Dashboard
                 </Link>
               </li>
               <li>
-                <Link to="/dashboard/DonorMy" className="text-white">
+                <Link to="DonorMy" className="text-white">
                   <FaList></FaList> My Donation Requests
                 </Link>
               </li>
               <li>
-                <Link to="/dashboard/DonorCreate" className="text-white">
+                <Link to="DonorCreate" className="text-white">
                   <FaPlus></FaPlus> Create Donation Request
                 </Link>
               </li>
@@ -92,7 +92,7 @@ const Dashboard = () => {
             </Link>
           </li>
           <li>
-            <Link to="/dashboard/profile" className="text-white">
+            <Link to="profile" className="text-white">
               <FaUser></FaUser> Profile
             </Link>
           </li>

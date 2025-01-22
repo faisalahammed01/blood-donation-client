@@ -10,7 +10,7 @@ const MyDonation = () => {
   const [donners, setDonner] = useState([]);
   const [currentDonners, setCurrentDonners] = useState([]);
   const { user } = useContext(AuthContext);
-  const itemsPerPage = 4;
+  const itemsPerPage = 8;
   //! -------------delete---------------------------------
 
   const handleUserDelete = (id) => {
@@ -106,11 +106,6 @@ const MyDonation = () => {
   return (
     <>
       <div>
-        <h2 className="text-2xl text-center text-red-950">
-          {" "}
-          -------------------- Welcome {user?.displayName}
-          --------------------
-        </h2>
         <div className="divider "></div>
       </div>
       {/* -------------------------------Table----------------------- */}

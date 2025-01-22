@@ -219,6 +219,32 @@ const Detailas = () => {
               </div>
               <div className="form-control">
                 <label className="label">
+                  <span className="label-text">District</span>
+                </label>
+                <input
+                  {...register("District", { required: true })}
+                  type="text"
+                  name="District"
+                  value={District}
+                  readOnly
+                  className="input input-bordered"
+                />
+              </div>
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Upazila</span>
+                </label>
+                <input
+                  {...register("Upazila", { required: true })}
+                  type="text"
+                  name="Upazila"
+                  value={Upazila}
+                  readOnly
+                  className="input input-bordered"
+                />
+              </div>
+              <div className="form-control">
+                <label className="label">
                   <span className="label-text">Additional Notes </span>
                 </label>
                 <input

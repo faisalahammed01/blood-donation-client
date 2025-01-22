@@ -3,7 +3,6 @@ import Swal from "sweetalert2";
 
 const Update = () => {
   const data = useLoaderData();
-  //   console.log(data);
 
   const { Blood, address, date, email, name, time, _id } = data;
 

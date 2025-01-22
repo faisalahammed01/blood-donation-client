@@ -19,6 +19,7 @@ import Update from "./Dashboard/Donor/Update";
 import Detailas from "./Dashboard/Donor/Detailas";
 import MyDonation from "./Dashboard/Donor/MyDonation";
 import DonationRequrest from "./Layout/Donation/DonationRequrest";
+import SearchPage from "./Layout/Home/SearchPage";
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
       {
         path: "/DonationRequest",
         element: <DonationRequrest></DonationRequrest>,
+      },
+      {
+        path: "/search",
+        element: <SearchPage></SearchPage>,
       },
     ],
   },
@@ -59,22 +64,26 @@ const router = createBrowserRouter([
     children: [
       // By default
       {
-        path: "/dashboard/profile",
+        path: "profile",
         element: <Profile></Profile>,
       },
       // ----------------Admin----------------------
 
       // -----------------Donor----------------------
       {
-        path: "/dashboard/DonorCreate",
-        element: <Create></Create>,
-      },
-      {
-        path: "/dashboard/Home",
+        index: true,
         element: <DonorHome></DonorHome>,
       },
       {
-        path: "/dashboard/DonorMy",
+        path: "DonorCreate",
+        element: <Create></Create>,
+      },
+      {
+        path: "Home",
+        element: <DonorHome></DonorHome>,
+      },
+      {
+        path: "DonorMy",
         element: <MyDonation></MyDonation>,
       },
       {
@@ -85,7 +94,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/dashboard/details/:id",
-        element: <Detailas></Detailas>,
+        element: (
+          <PrivateRoute>
+            <Detailas></Detailas>,
+          </PrivateRoute>
+        ),
         loader: ({ params }) =>
           fetch(`http://localhost:5000/details/${params.id}`),
       },

@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const Banner = () => {
   return (
     <section className="relative">
@@ -20,12 +22,18 @@ const Banner = () => {
           </div>
         </div>
       </div>
-      <button className="absolute bottom-44 right-56 btn text-white bg-red-700 pr-20 pl-20 hover:bg-red-900">
+      <Link
+        to="singUp"
+        className="absolute bottom-44 right-56 btn text-white bg-red-700 pr-20 pl-20 hover:bg-red-900"
+      >
         Join as a donor
-      </button>
-      <button className="absolute bottom-24 right-56 btn  text-white bg-red-700 pr-20 pl-20 hover:bg-red-900">
+      </Link>
+      <Link
+        to="/search"
+        className="absolute bottom-24 right-56 btn  text-white bg-red-700 pr-20 pl-20 hover:bg-red-900"
+      >
         Search Donors
-      </button>
+      </Link>
     </section>
   );
 };

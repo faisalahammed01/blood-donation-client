@@ -56,13 +56,12 @@ const Create = () => {
                 <span className="label-text text-red-800">Name</span>
               </label>
               <input
-                {...register("name", { required: true })}
+                {...register("name")}
                 type="text"
                 name="name"
                 defaultValue={user?.displayName}
                 placeholder="Name"
                 className="input input-bordered"
-                required
                 readOnly
               />
             </div>
