@@ -1,17 +1,21 @@
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../Share/useAxiosSecure";
 
 const UseUser = () => {
-  const [User, setUser] = useState([]);
-  const [loading, setLoading] = useState(true);
-  useEffect(() => {
-    fetch("http://localhost:5000/users")
-      .then((res) => res.json())
-      .then((data) => {
-        setUser(data);
-        setLoading(false);
-      });
-  }, []);
-  return [User, loading];
+  const axiosSecure = useAxiosSecure();
+  const {
+    data: users = [],
+    isLoading: loading,
+    refetch,
+  } = useQuery({
+    queryKey: ["users"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/users");
+      return res.data;
+    },
+  });
+
+  return [users, loading, refetch];
 };
 
 export default UseUser;

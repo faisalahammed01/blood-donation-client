@@ -4,7 +4,7 @@ import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Providers/AuthProvider";
-import useAxiosPublic from "../Share/axiosPublic";
+import useAxiosPublic from "../Share/useAxiosPublic";
 import Swal from "sweetalert2";
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
@@ -63,6 +63,7 @@ const Register = () => {
         district: selectedDistricts,
         upazila: selectedUpazila,
         status: "Active",
+        role: "Donor",
       };
 
       const userCredential = await createUser(data.email, data.password);

@@ -20,6 +20,11 @@ import Detailas from "./Dashboard/Donor/Detailas";
 import MyDonation from "./Dashboard/Donor/MyDonation";
 import DonationRequrest from "./Layout/Donation/DonationRequrest";
 import SearchPage from "./Layout/Home/SearchPage";
+import Fund from "./Layout/Home/Payment/Fund";
+import AdminHome from "./Dashboard/Admin/AdminHome";
+import AdminUsers from "./Dashboard/Admin/AdminUsers";
+import AdminRequrest from "./Dashboard/Admin/AdminRequrest";
+import AdminBlogs from "./Dashboard/Admin/AdminBlogs";
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
@@ -44,6 +49,14 @@ const router = createBrowserRouter([
         path: "/search",
         element: <SearchPage></SearchPage>,
       },
+      {
+        path: "/fund",
+        element: (
+          <PrivateRoute>
+            <Fund></Fund>
+          </PrivateRoute>
+        ),
+      },
     ],
   },
   {
@@ -67,9 +80,26 @@ const router = createBrowserRouter([
         path: "profile",
         element: <Profile></Profile>,
       },
-      // ----------------Admin----------------------
+      // !----------------Admin----------------------
+      {
+        path: "adminHome",
+        element: <AdminHome></AdminHome>,
+      },
+      {
+        path: "AdminUsers",
+        element: <AdminUsers></AdminUsers>,
+      },
+      {
+        path: "AdminRequest",
+        element: <AdminRequrest></AdminRequrest>,
+      },
+      {
+        path: "AdminBlogs",
+        element: <AdminBlogs></AdminBlogs>,
+      },
+      //! ----------------Volunteer-----------------------
 
-      // -----------------Donor----------------------
+      //! -----------------Donor----------------------
       {
         index: true,
         element: <DonorHome></DonorHome>,
@@ -102,7 +132,6 @@ const router = createBrowserRouter([
         loader: ({ params }) =>
           fetch(`http://localhost:5000/details/${params.id}`),
       },
-      // ----------------Volunteer-----------------------
     ],
   },
 ]);

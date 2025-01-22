@@ -8,9 +8,11 @@ import {
   FaPlus,
 } from "react-icons/fa";
 import { Link, Outlet } from "react-router-dom";
+import UseAdmin from "./Admin/useAdmin";
 
 const Dashboard = () => {
-  const isAdmin = false;
+  const [isAdmin] = UseAdmin();
+  // const isAdmin = true;
   const isVolunteer = false;
 
   return (
@@ -22,22 +24,22 @@ const Dashboard = () => {
             <>
               {/*-=---------------------------- ADMIN--------------- */}
               <li>
-                <Link to="/dashboard" className="text-white">
+                <Link to="adminHome" className="text-white">
                   <FaHome></FaHome> Admin Dashboard
                 </Link>
               </li>
               <li>
-                <Link to="/dashboard/AdminUsers" className="text-white">
+                <Link to="AdminUsers" className="text-white">
                   <FaUsers></FaUsers> Manage Users
                 </Link>
               </li>
               <li>
-                <Link to="/dashboard/AdminRequest" className="text-white">
+                <Link to="AdminRequest" className="text-white">
                   <FaTint></FaTint> All Blood Requests
                 </Link>
               </li>
               <li>
-                <Link to="/dashboard/AdminManagement" className="text-white">
+                <Link to="AdminBlogs" className="text-white">
                   <FaBlog></FaBlog> Manage Blogs
                 </Link>
               </li>

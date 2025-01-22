@@ -28,7 +28,9 @@ const Nav = () => {
         <div className="flex flex-1 justify-center items-center space-x-4 whitespace-nowrap">
           {link}
           {user && (
-            <NavLink className="hover:text-red-600 uppercase">Funding </NavLink>
+            <NavLink to="/fund" className="hover:text-red-600 uppercase">
+              Funding
+            </NavLink>
           )}
         </div>
       </div>
