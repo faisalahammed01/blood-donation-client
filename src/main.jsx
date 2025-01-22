@@ -25,6 +25,11 @@ import AdminHome from "./Dashboard/Admin/AdminHome";
 import AdminUsers from "./Dashboard/Admin/AdminUsers";
 import AdminRequrest from "./Dashboard/Admin/AdminRequrest";
 import AdminBlogs from "./Dashboard/Admin/AdminBlogs";
+import VolunteerHome from "./Dashboard/Volunteer/VolunteerHome";
+import VolunteerRequest from "./Dashboard/Volunteer/VolunteerRequest";
+import VolunteerManagement from "./Dashboard/Volunteer/VolunteerManagement";
+import AdminRoute from "./Dashboard/Admin/AdminRoute";
+import VolunteerRoute from "./Dashboard/Volunteer/VolunteerRoute";
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
@@ -77,28 +82,71 @@ const router = createBrowserRouter([
     children: [
       // By default
       {
+        index: true,
+        element: <Profile></Profile>,
+      },
+      {
         path: "profile",
         element: <Profile></Profile>,
       },
       // !----------------Admin----------------------
       {
         path: "adminHome",
-        element: <AdminHome></AdminHome>,
+        element: (
+          <AdminRoute>
+            <AdminHome></AdminHome>,
+          </AdminRoute>
+        ),
       },
       {
         path: "AdminUsers",
-        element: <AdminUsers></AdminUsers>,
+        element: (
+          <AdminRoute>
+            <AdminUsers></AdminUsers>,
+          </AdminRoute>
+        ),
       },
       {
         path: "AdminRequest",
-        element: <AdminRequrest></AdminRequrest>,
+        element: (
+          <AdminRoute>
+            <AdminRequrest></AdminRequrest>,
+          </AdminRoute>
+        ),
       },
       {
         path: "AdminBlogs",
-        element: <AdminBlogs></AdminBlogs>,
+        element: (
+          <AdminRoute>
+            <AdminBlogs></AdminBlogs>,
+          </AdminRoute>
+        ),
       },
       //! ----------------Volunteer-----------------------
-
+      {
+        path: "volunteerHome",
+        element: (
+          <VolunteerRoute>
+            <VolunteerHome></VolunteerHome>,
+          </VolunteerRoute>
+        ),
+      },
+      {
+        path: "volunteerRequest",
+        element: (
+          <VolunteerRoute>
+            <VolunteerRequest></VolunteerRequest>,
+          </VolunteerRoute>
+        ),
+      },
+      {
+        path: "volunteerManagement",
+        element: (
+          <VolunteerRoute>
+            <VolunteerManagement></VolunteerManagement>,
+          </VolunteerRoute>
+        ),
+      },
       //! -----------------Donor----------------------
       {
         index: true,

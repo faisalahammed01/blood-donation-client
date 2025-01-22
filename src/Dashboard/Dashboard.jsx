@@ -9,11 +9,11 @@ import {
 } from "react-icons/fa";
 import { Link, Outlet } from "react-router-dom";
 import UseAdmin from "./Admin/useAdmin";
+import UseVolunteer from "./Volunteer/Usevolunteer";
 
 const Dashboard = () => {
   const [isAdmin] = UseAdmin();
-  // const isAdmin = true;
-  const isVolunteer = false;
+  const [isVolunteer] = UseVolunteer();
 
   return (
     <div className="flex">
@@ -48,20 +48,17 @@ const Dashboard = () => {
             <>
               {/* -------------------------------Volunteer--------------------------------------- */}
               <li>
-                <Link to="/dashboard" className="text-white">
+                <Link to="volunteerHome" className="text-white">
                   <FaHome></FaHome> Volunteer Dashboard
                 </Link>
               </li>
               <li>
-                <Link to="/dashboard/volunteer-request" className="text-white">
+                <Link to="volunteerRequest" className="text-white">
                   <FaTint></FaTint> Blood Requests
                 </Link>
               </li>
               <li>
-                <Link
-                  to="/dashboard/volunteer-management"
-                  className="text-white"
-                >
+                <Link to="volunteerManagement" className="text-white">
                   <FaBlog></FaBlog> Content Management
                 </Link>
               </li>
