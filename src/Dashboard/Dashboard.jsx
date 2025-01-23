@@ -8,12 +8,14 @@ import {
   FaPlus,
 } from "react-icons/fa";
 import { Link, Outlet } from "react-router-dom";
-import UseAdmin from "./Admin/useAdmin";
-import UseVolunteer from "./Volunteer/Usevolunteer";
+// import UseAdmin from "./Admin/useAdmin";
+// import UseVolunteer from "./Volunteer/Usevolunteer";
 
 const Dashboard = () => {
-  const [isAdmin] = UseAdmin();
-  const [isVolunteer] = UseVolunteer();
+  // const [isAdmin] = UseAdmin();
+  // const [isVolunteer] = UseVolunteer();
+  const isAdmin = false;
+  const isVolunteer = false;
 
   return (
     <div className="flex">

@@ -30,6 +30,7 @@ import VolunteerRequest from "./Dashboard/Volunteer/VolunteerRequest";
 import VolunteerManagement from "./Dashboard/Volunteer/VolunteerManagement";
 import AdminRoute from "./Dashboard/Admin/AdminRoute";
 import VolunteerRoute from "./Dashboard/Volunteer/VolunteerRoute";
+import GiveFund from "./Layout/Home/Payment/GiveFund";
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
@@ -56,6 +57,14 @@ const router = createBrowserRouter([
       },
       {
         path: "/fund",
+        element: (
+          <PrivateRoute>
+            <GiveFund></GiveFund>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/fundpay",
         element: (
           <PrivateRoute>
             <Fund></Fund>

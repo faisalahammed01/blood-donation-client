@@ -2,21 +2,23 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import React from "react";
 import CheckOutForm from "./CheckOutForm";
-import { FaStripe } from "react-icons/fa6";
+import { FaCcMastercard, FaCcVisa, FaCreditCard } from "react-icons/fa";
 
 const stripePromise = loadStripe("pk_test_51J0ZQvK5 ...");
 const Fund = () => {
   return (
-    <>
-      <h2 className="uppercase text-center mt-4 text-4xl text-red-800">
-        -----------------payment-----------------
-      </h2>
-      <div className=" mt-20 md:mx-44">
+    <div className="">
+      <h1 className="flex justify-center text-4xl mt-10 gap-4">
+        <FaCcVisa></FaCcVisa>
+        <FaCcMastercard />
+        <FaCreditCard />
+      </h1>
+      <div className=" mt-20 md:mx-96">
         <Elements stripe={stripePromise}>
           <CheckOutForm></CheckOutForm>
         </Elements>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -1,4 +1,5 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
+import { FaCreditCard } from "react-icons/fa6";
 
 const CheckOutForm = () => {
   const stripe = useStripe();
@@ -33,8 +34,8 @@ const CheckOutForm = () => {
           }}
         ></CardElement>
         <div className="flex justify-center">
-          <button className="btn  mt-6 text-white rounded-b-2xl rounded-r-2xl  bg-red-700">
-            Pay
+          <button className="btn mt-3 text-xl px-32 text-white bg-red-950 hover:bg-black">
+            <FaCreditCard></FaCreditCard> Pay
           </button>
         </div>
       </form>
