@@ -8,8 +8,7 @@ const DonorHome = () => {
   const [donners, setDonner] = useState([]);
   const { user } = useContext(AuthContext);
   //! -------------delete---------------------------------
-  //   const Item = useLoaderData();
-  //   const [MyItem, SetItem] = useState(Item);
+
   const handleUserDelete = (id) => {
     Swal.fire({
       title: "Are you sure?",

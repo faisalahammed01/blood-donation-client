@@ -31,6 +31,8 @@ import VolunteerManagement from "./Dashboard/Volunteer/VolunteerManagement";
 import AdminRoute from "./Dashboard/Admin/AdminRoute";
 import VolunteerRoute from "./Dashboard/Volunteer/VolunteerRoute";
 import GiveFund from "./Layout/Home/Payment/GiveFund";
+import BlogManagment from "./Dashboard/Donor/BlogManagment";
+import AddBlogVlounter from "./Dashboard/Volunteer/AddBlogVlounter";
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
@@ -97,6 +99,14 @@ const router = createBrowserRouter([
       {
         path: "profile",
         element: <Profile></Profile>,
+      },
+      {
+        path: "AdminBlogs/blogManagement",
+        element: <BlogManagment></BlogManagment>,
+      },
+      {
+        path: "volunteerManagement/blogManagements",
+        element: <AddBlogVlounter></AddBlogVlounter>,
       },
       // !----------------Admin----------------------
       {
