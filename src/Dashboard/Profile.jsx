@@ -4,18 +4,21 @@ import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaEdit } from "react-icons/fa";
 import { AuthContext } from "../Providers/AuthProvider";
+import Swal from "sweetalert2";
+import { updateProfile } from "firebase/auth";
+
+const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
+const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 
 const Profile = () => {
   const [selectedUpazila, setSelectedUpazila] = useState("");
   const [selectedDistricts, setSelectedDistricts] = useState("");
   const [isEditable, setIsEditable] = useState(false);
   const { user } = useContext(AuthContext);
-  // todo-----send data database-
+
   const {
     register,
-
-    reset,
-
+    handleSubmit,
     formState: { errors },
   } = useForm();
   // -------------------------------------UPAZILAS____DISTRICTS------------------------------------------------------------
@@ -35,14 +38,54 @@ const Profile = () => {
     },
   });
   // --------------------------------------------------------------------------------------
-  const onSubmit = (data) => {
-    setIsEditable(false);
+  const handleUpProfile = async (data) => {
+    const updatedData = {
+      name: data.name,
+      email: user?.email,
+      image: data.image[0],
+      bloodGroup: data.Blood,
+      district: selectedDistricts,
+      upazila: selectedUpazila,
+    };
+
+    let imageUrl = user?.photoURL;
+
+    if (data.image[0]) {
+      const formData = new FormData();
+      formData.append("image", data.image[0]);
+      const imgResponse = await axios.post(image_hosting_api, formData);
+      imageUrl = imgResponse.data.data.display_url;
+    }
+
+    updatedData.image = imageUrl;
+
+    const response = await axios.patch(
+      `http://localhost:5000/users/profile/${user?.email}`,
+      updatedData
+    );
+    if (response.data.modifiedCount > 0) {
+      await updateProfile(user, { displayName: data.name, photoURL: imageUrl });
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "User Updated Successfully",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      setIsEditable(false);
+    }
   };
 
   return (
     <div className="lg:w-3/4 mx-auto">
+      <div className="text-center p-10">
+        <img
+          className="size-40 rounded-full border-4   border-black"
+          src={user?.photoURL}
+        />
+      </div>
       <div className="card bg-base-100 w-full shrink-0 shadow-2xl">
-        <form className="card-body">
+        <form onSubmit={handleSubmit(handleUpProfile)} className="card-body">
           {/* form first row */}
           <div className="flex flex-col lg:flex-row gap-5">
             <div className="form-control flex-1">
@@ -85,11 +128,10 @@ const Profile = () => {
               </label>
               <input
                 {...register("image", { required: true })}
-                type="url"
+                type="file"
                 name="image"
                 disabled={!isEditable}
                 placeholder="Avatar"
-                defaultValue={user?.photoURL}
                 className="input input-bordered"
                 required
               />

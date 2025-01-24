@@ -58,7 +58,7 @@ const AdminUsers = () => {
             {/* row 1 */}
             {users.map((user) => (
               <tr key={user._id}>
-                <td>
+                <td key={user._id}>
                   <div className="flex items-center gap-3">
                     <div className="avatar">
                       <div className="mask mask-squircle h-12 w-12">

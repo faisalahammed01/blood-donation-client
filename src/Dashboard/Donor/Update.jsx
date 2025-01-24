@@ -36,7 +36,7 @@ const Update = () => {
           // console.log("successfully updated");
           Swal.fire({
             title: "Success!",
-            text: "Item updated successfully",
+            text: "updated successfully",
             icon: "success",
             confirmButtonText: "Ok",
           });

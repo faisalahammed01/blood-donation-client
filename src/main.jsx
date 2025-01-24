@@ -33,6 +33,7 @@ import VolunteerRoute from "./Dashboard/Volunteer/VolunteerRoute";
 import GiveFund from "./Layout/Home/Payment/GiveFund";
 import BlogManagment from "./Dashboard/Donor/BlogManagment";
 import AddBlogVlounter from "./Dashboard/Volunteer/AddBlogVlounter";
+import Seemore from "./Layout/Home/Seemore";
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
@@ -83,6 +84,13 @@ const router = createBrowserRouter([
     path: "singUp",
     element: <Register></Register>,
   },
+
+  {
+    path: "/seeMore/:id",
+    element: <Seemore></Seemore>,
+
+    loader: ({ params }) => fetch(`http://localhost:5000/seeMore/${params.id}`),
+  },
   {
     path: "dashboard",
     element: (
@@ -100,6 +108,7 @@ const router = createBrowserRouter([
         path: "profile",
         element: <Profile></Profile>,
       },
+
       {
         path: "AdminBlogs/blogManagement",
         element: <BlogManagment></BlogManagment>,

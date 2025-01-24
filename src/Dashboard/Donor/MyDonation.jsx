@@ -33,7 +33,7 @@ const MyDonation = () => {
             if (data.deletedCount) {
               Swal.fire({
                 title: "Deleted!",
-                text: "Your item has been successfully deleted",
+                text: "Your request has been successfully deleted",
                 icon: "success",
               });
 
@@ -148,12 +148,6 @@ const MyDonation = () => {
                       >
                         <FaEdit></FaEdit>
                       </Link>
-                      <button
-                        onClick={() => handleUserDelete(donner._id)}
-                        className="bg-red-500 text-white px-2 py-1 rounded"
-                      >
-                        <FaTrash></FaTrash>
-                      </button>
                     </>
                   )}
                   {donner.status === "inprogress" && (
@@ -178,6 +172,12 @@ const MyDonation = () => {
                   >
                     <FaEye></FaEye>
                   </Link>
+                  <button
+                    onClick={() => handleUserDelete(donner._id)}
+                    className="bg-red-500 text-white px-2 py-1 rounded"
+                  >
+                    <FaTrash></FaTrash>
+                  </button>
                 </td>
               </tr>
             ))}

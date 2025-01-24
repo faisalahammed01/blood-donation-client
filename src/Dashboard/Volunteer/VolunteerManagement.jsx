@@ -19,7 +19,10 @@ const VolunteerManagement = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
         {blogs.map((blog) => (
-          <div className="card bg-base-100 w-96 shadow-sm border-2 border-red-950">
+          <div
+            key={blog._id}
+            className="card bg-base-100 w-96 shadow-sm border-2 border-red-950"
+          >
             <figure>
               <img src={blog.image} alt="img" />
             </figure>
