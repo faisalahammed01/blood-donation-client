@@ -6,7 +6,9 @@ import { Link } from "react-router-dom";
 const VolunteerManagement = () => {
   const [blogs, setBlogs] = useState([]);
   useEffect(() => {
-    axios.get("http://localhost:5000/blogs").then((res) => setBlogs(res.data));
+    axios
+      .get("https://blood-donation-server-eta-eight.vercel.app/blogs")
+      .then((res) => setBlogs(res.data));
   }, []);
   return (
     <div>

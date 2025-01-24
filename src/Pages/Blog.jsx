@@ -5,12 +5,14 @@ import { Link } from "react-router-dom";
 const Blog = () => {
   const [blogs, setBlogs] = useState([]);
   useEffect(() => {
-    axios.get("http://localhost:5000/AllBlog").then((res) => {
-      const publishedBlogs = res.data.filter(
-        (blog) => blog.status === "published"
-      );
-      setBlogs(publishedBlogs);
-    });
+    axios
+      .get("https://blood-donation-server-eta-eight.vercel.app/AllBlog")
+      .then((res) => {
+        const publishedBlogs = res.data.filter(
+          (blog) => blog.status === "published"
+        );
+        setBlogs(publishedBlogs);
+      });
   }, []);
   return (
     <div>

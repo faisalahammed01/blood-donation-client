@@ -5,10 +5,11 @@ const GiveFund = () => {
   const navigate = useNavigate();
   const { register, handleSubmit } = useForm();
   const onSubmit = (data) => {
-    axios.post("http://localhost:5000/fund", data).then((res) => {
-      console.log(res);
-      navigate("/fundpay");
-    });
+    axios
+      .post("https://blood-donation-server-eta-eight.vercel.app/fund", data)
+      .then((res) => {
+        navigate("/fundpay");
+      });
   };
   return (
     <div className="lg:w-3/4 mx-auto">

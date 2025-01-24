@@ -41,10 +41,11 @@ const Detailas = () => {
     const updatedData = { status: "inprogress" };
 
     axios
-      .put(`http://localhost:5000/DonationUpStatus/${_id}`, updatedData)
-      .then((res) => {
-        console.log(res.data);
-      });
+      .put(
+        `https://blood-donation-server-eta-eight.vercel.app/DonationUpStatus/${_id}`,
+        updatedData
+      )
+      .then((res) => {});
   }, [_id]);
   //   ---------------------------------------------------------------------------------
   const [isConfirm, setConfirm] = useState(false);
@@ -52,14 +53,16 @@ const Detailas = () => {
     if (isConfirm) return;
     setConfirm(true);
     data.status = "pending";
-    axios.post("http://localhost:5000/donor", data).then((res) => {
-      if (res.data.insertedId) {
-        reset();
-        toast.success(
-          "Your blood donation request has been successfully submitted! Thank you for your generosity."
-        );
-      }
-    });
+    axios
+      .post("https://blood-donation-server-eta-eight.vercel.app/donor", data)
+      .then((res) => {
+        if (res.data.insertedId) {
+          reset();
+          toast.success(
+            "Your blood donation request has been successfully submitted! Thank you for your generosity."
+          );
+        }
+      });
   };
   return (
     <div className="card bg-base-100 max-w-[760px] shadow-xl mx-auto">

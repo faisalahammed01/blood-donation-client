@@ -8,15 +8,15 @@ const AdminHome = () => {
   const [funds, setFund] = useState([]);
   const [bloodreq, setBloodReq] = useState([]);
 
-  fetch(`http://localhost:5000/donor`)
+  fetch(`https://blood-donation-server-eta-eight.vercel.app/donor`)
     .then((res) => res.json())
     .then((donner) => setDonner(donner));
   // -----------------------------------
-  fetch(`http://localhost:5000/fund`)
+  fetch(`https://blood-donation-server-eta-eight.vercel.app/fund`)
     .then((res) => res.json())
     .then((funds) => setFund(funds));
   // ----------------------------------------
-  fetch(`http://localhost:5000/DonationRequrests`)
+  fetch(`https://blood-donation-server-eta-eight.vercel.app/DonationRequrests`)
     .then((res) => res.json())
     .then((bloodreq) => setBloodReq(bloodreq));
   const { user } = useContext(AuthContext);

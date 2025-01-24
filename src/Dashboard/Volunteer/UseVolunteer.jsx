@@ -9,7 +9,6 @@ const UseVolunteer = () => {
     queryKey: [user?.email, "volunteer"],
     queryFn: async () => {
       const res = await axiosSecure.get(`/users/volunteer/${user.email}`);
-      console.log(res.data);
       return res?.data.volunteer;
     },
   });
