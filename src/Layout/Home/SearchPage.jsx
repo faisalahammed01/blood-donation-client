@@ -45,7 +45,7 @@ const SearchPage = () => {
 
   return (
     <>
-      <h2 className="text-center font-bold text-4xl my-3 text-white dark:text-gray-200">
+      <h2 className="text-center font-bold text-4xl my-3 text-black dark:text-gray-200">
         🔎 Search <span className="text-red-500">Blood</span> Donors
       </h2>
 

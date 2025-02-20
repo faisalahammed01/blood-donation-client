@@ -93,10 +93,9 @@ const DonorHome = () => {
   return (
     <>
       <div>
-        <h2 className="text-2xl text-center text-red-950">
+        <h2 className="text-2xl text-center bg-black glass text-white py-2 rounded-lg my-4">
           {" "}
-          -------------------- Welcome {user?.displayName}
-          --------------------
+          Welcome {user?.displayName}
         </h2>
         <div className="divider "></div>
       </div>
@@ -164,12 +163,6 @@ const DonorHome = () => {
                       </button>
                     </>
                   )}
-                  <Link
-                    to={`/dashboard/details/${donner._id}`}
-                    className="bg-black text-white px-2 py-1 rounded"
-                  >
-                    <FaEye></FaEye>
-                  </Link>
                 </td>
               </tr>
             ))}
@@ -178,9 +171,9 @@ const DonorHome = () => {
       </div>
       <Link
         to="/dashboard/DonorMy"
-        className=" my-4 ml-4 text-red-600 btn btn-link text-xl "
+        className=" my-4 ml-4 text-black btn btn-link text-xl uppercase "
       >
-        view my all request
+        view all request
       </Link>
     </>
   );

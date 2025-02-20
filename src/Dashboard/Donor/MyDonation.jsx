@@ -159,19 +159,14 @@ const MyDonation = () => {
                         Done
                       </button>
                       <button
-                        onClick={() => handleStatusUp(donner._id, "done")}
+                        onClick={() => handleStatusUp(donner._id, "cancelled")}
                         className="bg-gray-500 text-white px-2 py-1 rounded"
                       >
                         Cancel
                       </button>
                     </>
                   )}
-                  <Link
-                    to={`/dashboard/details/${donner._id}`}
-                    className="bg-black text-white px-2 py-1 rounded"
-                  >
-                    <FaEye></FaEye>
-                  </Link>
+
                   <button
                     onClick={() => handleUserDelete(donner._id)}
                     className="bg-red-500 text-white px-2 py-1 rounded"
