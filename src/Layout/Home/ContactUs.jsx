@@ -37,7 +37,7 @@ const ContactUs = () => {
       <div className="max-w-6xl mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           {/* Left Section - Contact Info */}
-          <div className="bg-red-50 p-8 rounded-2xl shadow-xl border border-red-200">
+          <div className="bg-white p-8 rounded-2xl shadow-xl border border-red-200">
             <h3 className="text-2xl font-semibold mb-4 text-red-600">
               Contact Us
             </h3>
@@ -72,7 +72,7 @@ const ContactUs = () => {
           </div>
 
           {/* Right Section - Contact Form */}
-          <div className="bg-red-50 p-8 rounded-2xl shadow-xl border border-red-200">
+          <div className="bg-white p-8 rounded-2xl shadow-xl border border-red-200">
             <form ref={form} onSubmit={sendEmail} className="space-y-6">
               <input
                 type="text"

@@ -16,6 +16,7 @@
     "axios": "^1.7.9",
     "emailjs": "^4.0.3",
     "firebase": "^11.1.0",
+    "framer-motion": "^12.4.7",
     "jodit-react": "^5.0.10",
     "localforage": "^1.10.0",
     "match-sorter": "^8.0.0",

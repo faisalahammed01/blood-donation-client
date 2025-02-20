@@ -5,13 +5,16 @@ import { AuthContext } from "../../Providers/AuthProvider";
 import { CiMenuKebab } from "react-icons/ci";
 const link = (
   <>
-    <NavLink className="hover:text-red-600 uppercase" to="/">
+    <NavLink className="hover:text-red-600 font-semibold uppercase" to="/">
       Home
     </NavLink>
-    <NavLink className="hover:text-red-600 uppercase" to="/DonationRequest">
+    <NavLink
+      className="hover:text-red-600 font-semibold uppercase"
+      to="/DonationRequest"
+    >
       Donation Requests
     </NavLink>
-    <NavLink className="hover:text-red-600 uppercase" to="/blog">
+    <NavLink className="hover:text-red-600 font-semibold uppercase" to="/blog">
       Blog
     </NavLink>
   </>
@@ -34,7 +37,10 @@ const Nav = () => {
           >
             {link}
             {user && (
-              <NavLink to="/fund" className="hover:text-red-600 uppercase">
+              <NavLink
+                to="/fund"
+                className="hover:text-red-600 font-semibold uppercase"
+              >
                 Funding
               </NavLink>
             )}
@@ -49,7 +55,10 @@ const Nav = () => {
         <div className="hidden lg:flex flex-1 justify-center items-center space-x-4 whitespace-nowrap">
           {link}
           {user && (
-            <NavLink to="/fund" className="hover:text-red-600 uppercase">
+            <NavLink
+              to="/fund"
+              className="hover:text-red-600 font-semibold uppercase"
+            >
               Funding
             </NavLink>
           )}
@@ -59,7 +68,7 @@ const Nav = () => {
       {/* Profile / Login section */}
       {user ? (
         <>
-          <div className="flex-none">
+          <div className="flex-none border-rose-600 border-2 rounded-full">
             <div className="dropdown dropdown-end">
               <div
                 tabIndex={0}
@@ -102,7 +111,12 @@ const Nav = () => {
           </div>
         </>
       ) : (
-        <Link to="/login">LOGIN</Link>
+        <Link
+          className="px-4 py-2 bg-red-600 text-white rounded-md font-bold hover:bg-red-700"
+          to="/login"
+        >
+          LOGIN
+        </Link>
       )}
     </div>
   );

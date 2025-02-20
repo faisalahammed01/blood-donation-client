@@ -9,7 +9,7 @@ const WhyChooseUs = () => {
   return (
     <div className="bg-white text-gray-900 py-16 px-6 md:px-12">
       <div className="max-w-5xl mx-auto text-center">
-        <h2 className="text-4xl md:text-5xl font-extrabold uppercase mb-6">
+        <h2 className="text-xl md:text-4xl font-extrabold uppercase mb-6">
           Why Choose Our <span className="text-red-500">Blood Donation</span>{" "}
           Platform?
         </h2>

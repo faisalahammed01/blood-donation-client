@@ -47,7 +47,7 @@ const SearchPage = () => {
       </h2>
 
       <div className="lg:w-3/4 mx-auto">
-        <div className="card bg-base-100 w-full shrink-0 shadow-2xl">
+        <div className="card bg-base-100 w-full shrink-0 shadow-md">
           <form onSubmit={handleSubmit(handleSearch)} className="card-body">
             {/* form second row */}
             <div className="flex flex-col lg:flex-row gap-5">
