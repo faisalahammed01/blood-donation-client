@@ -1,6 +1,6 @@
 const Footer = () => {
   return (
-    <footer className="relative footer antialiased bg-white text-neutral-content p-10 border-y-2 border-black">
+    <footer className="relative footer antialiased bg-white text-neutral-content p-10 border-y-2 border-red-400">
       {/* Multiple Blood Drops */}
       <div className="absolute top-5 left-10 w-4 h-4 bg-red-600 rounded-full animate-bounce"></div>
       <div className="absolute bottom-10 left-1/3 w-3 h-3 bg-red-700 rounded-full animate-bounce"></div>
