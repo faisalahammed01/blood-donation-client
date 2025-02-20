@@ -2,7 +2,7 @@ import { Link, NavLink } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import { useContext } from "react";
 import { AuthContext } from "../../Providers/AuthProvider";
-
+import { CiMenuKebab } from "react-icons/ci";
 const link = (
   <>
     <NavLink className="hover:text-red-600 uppercase" to="/">
@@ -16,16 +16,37 @@ const link = (
     </NavLink>
   </>
 );
+
 const Nav = () => {
   const { user, logOut } = useContext(AuthContext);
+
   return (
     <div className="navbar bg-base-100 container mx-auto">
       <div className="flex-1">
+        {/* Dropdown for smaller screens */}
+        <div className="dropdown dropdown-bottom lg:hidden">
+          <label tabIndex={0} className="">
+            <CiMenuKebab className="size-8 hover:text-red-900"></CiMenuKebab>
+          </label>
+          <ul
+            tabIndex={0}
+            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+          >
+            {link}
+            {user && (
+              <NavLink to="/fund" className="hover:text-red-600 uppercase">
+                Funding
+              </NavLink>
+            )}
+          </ul>
+        </div>
         <div>
           <img className="size-14" src={logo} alt="" />
         </div>
-        <a className="font-bold text-lg ">Blood Donation</a>
-        <div className="flex flex-1 justify-center items-center space-x-4 whitespace-nowrap">
+        <a className="font-bold text-lg">Blood Donation</a>
+
+        {/* Links for larger screens */}
+        <div className="hidden lg:flex flex-1 justify-center items-center space-x-4 whitespace-nowrap">
           {link}
           {user && (
             <NavLink to="/fund" className="hover:text-red-600 uppercase">
@@ -35,8 +56,7 @@ const Nav = () => {
         </div>
       </div>
 
-      {/* -------------------------------------------------------------------------------------------- */}
-
+      {/* Profile / Login section */}
       {user ? (
         <>
           <div className="flex-none">
@@ -48,7 +68,6 @@ const Nav = () => {
               >
                 <div className="w-10 rounded-full">
                   <img
-                    className=""
                     alt="Profile"
                     src={
                       user

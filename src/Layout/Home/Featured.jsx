@@ -1,76 +1,68 @@
-const Featured = () => {
+import {
+  FaHandHoldingHeart,
+  FaUsers,
+  FaShieldAlt,
+  FaGlobe,
+} from "react-icons/fa";
+
+const WhyChooseUs = () => {
   return (
-    <div className="bg-base-100">
-      <h1 className="text-2xl font-bold text-center pt-4">
-        Why Choose Our Blood Donation Platform?
-        <div className="divider divider-error mx-auto w-28"></div>
-      </h1>{" "}
-      <p className="text-center mb-4">
-        We connect verified donors with those in need, ensuring a trusted and
-        efficient blood donation process. With role-based dashboards, advanced
-        search, and comprehensive resources, our platform makes saving lives
-        simple and impactful. Join us to make a difference today!
-      </p>
-      {/* 1 */}
-      <div className=" my-4 md:flex">
-        <div className="w-4/6">
-          <h4 className="text-lg text-center font-bold">Trusted Network</h4>{" "}
-          <p className="mt-8 text-center">
-            We have partnered with a reliable network of verified blood donors
-            and reputed healthcare facilities to ensure safe and effective blood
-            donation processes. Rest assured, every connection is secure and
-            authentic.
-          </p>
-          <div className="divider divider-error mx-auto w-40"></div>
-        </div>
-        <div className="w-3/6">
-          <img
-            className="w-full h-56"
-            src="https://i.ibb.co.com/vBt8KzG/photo-removebg-preview.png"
-            alt=""
-          />
-        </div>
+    <div className="bg-white text-gray-900 py-16 px-6 md:px-12">
+      <div className="max-w-5xl mx-auto text-center">
+        <h2 className="text-4xl md:text-5xl font-extrabold uppercase mb-6">
+          Why Choose Our <span className="text-red-500">Blood Donation</span>{" "}
+          Platform?
+        </h2>
+        <p className="text-lg text-gray-600 mb-12">
+          We provide a safe, trusted, and efficient way to donate blood. Be a
+          hero and help save lives today!
+        </p>
       </div>
-      {/* 2 */}
-      <div className="my-7 md:gap-x-2 md:flex">
-        <div className="w-3/6">
-          <img
-            className="w-full h-56"
-            src="https://i.ibb.co.com/3kvswV2/8295185.png"
-            alt=""
-          />
-        </div>
-        <div className="w-4/6">
-          <h4 className="text-lg text-center font-bold">Quick Response</h4>{" "}
-          <p className="mt-8 text-center">
-            Emergencies don't wait, and neither do we. Our platform is built to
-            provide immediate access to a network of available blood donors,
-            ensuring timely assistance during critical situations
+
+      {/* Features Section */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+        {/* Feature 1 */}
+        <div className="backdrop-blur-xl  bg-black glass rounded-xl p-6 text-center shadow-lg border border-gray-800 transform transition-all duration-300 hover:scale-105 hover:shadow-red-500/30">
+          <FaHandHoldingHeart className="text-red-500 text-5xl mx-auto mb-4" />
+          <h3 className="text-2xl font-semibold text-white">
+            Life-Saving Impact
+          </h3>
+          <p className="text-sm text-gray-300 mt-2">
+            Your donation directly helps patients in need and saves lives.
           </p>
-          <div className="divider divider-error mx-auto w-40"></div>
         </div>
-      </div>
-      {/* 3 */}
-      <div className="md:flex">
-        <div className="w-4/6">
-          <h4 className="text-lg text-center font-bold">Advanced Search</h4>{" "}
-          <p className="mt-8 text-center">
-            Locate the right donor in no time with advanced filters for blood
-            type, location, and availability. Whether you're in a remote area or
-            need rare blood groups, our search system connects you efficiently
+
+        {/* Feature 2 */}
+        <div className="backdrop-blur-xl  bg-black glass rounded-xl p-6 text-center shadow-lg border border-gray-800 transform transition-all duration-300 hover:scale-105 hover:shadow-red-500/30">
+          <FaUsers className="text-red-500 text-5xl mx-auto mb-4" />
+          <h3 className="text-2xl font-semibold text-white">
+            Trusted Community
+          </h3>
+          <p className="text-sm text-gray-300 mt-2">
+            Join a growing network of dedicated donors and volunteers.
           </p>
-          <div className="divider divider-error mx-auto w-40"></div>
         </div>
-        <div className="w-3/6">
-          <img
-            className="w-full h-56"
-            src="https://i.ibb.co.com/LQ3nVXw/bldsearch.png"
-            alt=""
-          />
+
+        {/* Feature 3 */}
+        <div className="backdrop-blur-xl bg-black glass rounded-xl p-6 text-center shadow-lg border border-gray-800 transform transition-all duration-300 hover:scale-105 hover:shadow-red-500/30">
+          <FaShieldAlt className="text-red-500 text-5xl mx-auto mb-4" />
+          <h3 className="text-2xl font-semibold text-white">Safe & Secure</h3>
+          <p className="text-sm text-gray-300 mt-2">
+            We ensure a secure and hygienic donation process.
+          </p>
+        </div>
+
+        {/* Feature 4 */}
+        <div className="backdrop-blur-xl  bg-black glass rounded-xl p-6 text-center shadow-lg border border-gray-800 transform transition-all duration-300 hover:scale-105 hover:shadow-red-500/30">
+          <FaGlobe className="text-red-500 text-5xl mx-auto mb-4" />
+          <h3 className="text-2xl font-semibold text-white">Global Reach</h3>
+          <p className="text-sm text-gray-300 mt-2">
+            Helping patients worldwide with a vast donor network.
+          </p>
         </div>
       </div>
     </div>
   );
 };
 
-export default Featured;
+export default WhyChooseUs;

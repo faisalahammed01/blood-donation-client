@@ -36,13 +36,9 @@ const SearchPage = () => {
     setIsSubmitted(true);
     const { District, Upazila, Blood } = data;
     const query = `District=${District}&Upazila=${Upazila}&Blood=${Blood}`;
-    axios
-      .get(
-        `https://blood-donation-server-eta-eight.vercel.app/searchDonor?${query}`
-      )
-      .then((res) => {
-        setdonner(res.data);
-      });
+    axios.get(`http://localhost:5000/searchDonor?${query}`).then((res) => {
+      setdonner(res.data);
+    });
   };
   return (
     <div className="lg:w-3/4 mx-auto">

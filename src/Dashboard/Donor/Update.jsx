@@ -22,16 +22,13 @@ const Update = () => {
     };
 
     // send data to the server and database
-    fetch(
-      `https://blood-donation-server-eta-eight.vercel.app/DonationUp/${_id}`,
-      {
-        method: "PUT",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(newData),
-      }
-    )
+    fetch(`http://localhost:5000/DonationUp/${_id}`, {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(newData),
+    })
       .then((res) => res.json())
       .then((data) => {
         // console.log(data);

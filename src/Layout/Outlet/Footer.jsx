@@ -1,6 +1,6 @@
 const Footer = () => {
   return (
-    <footer className="footer bg-red-900 text-neutral-content p-10 border-y-2 border-black">
+    <footer className="footer antialiased bg-red-500 text-neutral-content p-10 border-y-4 border-black">
       <aside>
         <div>
           <img
@@ -9,10 +9,10 @@ const Footer = () => {
             alt=""
           />
         </div>
-        <p className="text-white text-xl">Saving lives, one drop at a time.</p>
+        <p className="text-black text-xl">Saving lives, one drop at a time.</p>
       </aside>
       <nav>
-        <h6 className="footer-title text-xl opacity-90 font-bold text-white">
+        <h6 className="footer-title text-xl opacity-90 font-bold text-black">
           Social
         </h6>
         <div className="grid grid-flow-col gap-4">

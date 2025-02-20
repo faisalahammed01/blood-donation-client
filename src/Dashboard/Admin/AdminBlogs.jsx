@@ -8,9 +8,7 @@ import Swal from "sweetalert2";
 const AdminBlogs = () => {
   const [blogs, setBlogs] = useState([]);
   useEffect(() => {
-    axios
-      .get("https://blood-donation-server-eta-eight.vercel.app/blog")
-      .then((res) => setBlogs(res.data));
+    axios.get("http://localhost:5000/blog").then((res) => setBlogs(res.data));
   }, []);
   const handleBlogDelete = (id) => {
     Swal.fire({
@@ -24,12 +22,9 @@ const AdminBlogs = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         //   ----------Delete from the database--------
-        fetch(
-          `https://blood-donation-server-eta-eight.vercel.app/blogs/${id}`,
-          {
-            method: "DELETE",
-          }
-        )
+        fetch(`http://localhost:5000/blogs/${id}`, {
+          method: "DELETE",
+        })
           .then((res) => res.json())
           .then((data) => {
             if (data.deletedCount) {
@@ -60,16 +55,13 @@ const AdminBlogs = () => {
       confirmButtonText: `Yes, ${newStatus}!`,
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(
-          `https://blood-donation-server-eta-eight.vercel.app/blogStatus/${id}`,
-          {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ status: newStatus }),
-          }
-        )
+        fetch(`http://localhost:5000/blogStatus/${id}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ status: newStatus }),
+        })
           .then((res) => res.json())
           .then((data) => {
             if (data.modifiedCount > 0) {
