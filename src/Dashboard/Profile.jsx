@@ -80,7 +80,7 @@ const Profile = () => {
     <div className="lg:w-3/4 mx-auto">
       <div className="text-center p-10">
         <img
-          className="size-40 rounded-full border-4   border-black"
+          className="size-40  border-4 mx-auto  border-black"
           src={user?.photoURL}
         />
       </div>

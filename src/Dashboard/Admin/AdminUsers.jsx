@@ -1,50 +1,84 @@
 import Swal from "sweetalert2";
 import UseUser from "../../Hooks/UseUser";
 import axios from "axios";
-//---------- make user admin-------------------
+import { useState } from "react";
+
 const AdminUsers = () => {
+  const [users, loading, refetch] = UseUser();
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const openModal = (user) => {
+    setSelectedUser(user);
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setSelectedUser(null);
+    setModalOpen(false);
+  };
+
   const handleMakeAdmin = (user) => {
-    axios.patch(`http://localhost:5000/users/admin/${user._id}`).then((res) => {
-      if (res.data.modifiedCount > 0) {
-        refetch();
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: `${user.name} is an Admin Now!`,
-          showConfirmButton: false,
-          timer: 1500,
-        });
+    Swal.fire({
+      title: `Are you sure you want to make ${user.name} an Admin?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Make Admin!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .patch(`http://localhost:5000/users/admin/${user._id}`)
+          .then((res) => {
+            if (res.data.modifiedCount > 0) {
+              refetch();
+              closeModal();
+              Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: `${user.name} is now an Admin!`,
+                showConfirmButton: false,
+                timer: 1500,
+              });
+            }
+          });
       }
     });
   };
-  // ---------------make user volunteer----------------
+
   const handleMakeVolunteer = (user) => {
-    axios
-      .patch(`http://localhost:5000/users/volunteer/${user._id}`)
-      .then((res) => {
-        if (res.data.modifiedCount > 0) {
-          refetch();
-          Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: `${user.name} is an volunteer Now!`,
-            showConfirmButton: false,
-            timer: 1500,
-          });
-        }
-      });
-  };
-  const [users, loading, refetch] = UseUser();
-
-  if (loading) {
-    return <h2 className="loading-spinner"></h2>;
-  }
-  // -----------------Block and Unblock User----------------
-  const handleStatusUp = (id, newStatus) => {
-    if (!id) return;
-
     Swal.fire({
-      title: `Are you sure you want to mark this as ${newStatus}?`,
+      title: `Are you sure you want to make ${user.name} a Volunteer?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Make Volunteer!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .patch(`http://localhost:5000/users/volunteer/${user._id}`)
+          .then((res) => {
+            if (res.data.modifiedCount > 0) {
+              refetch();
+              closeModal();
+              Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: `${user.name} is now a Volunteer!`,
+                showConfirmButton: false,
+                timer: 1500,
+              });
+            }
+          });
+      }
+    });
+  };
+
+  const handleStatusUpdate = (id, newStatus) => {
+    Swal.fire({
+      title: `Are you sure you want to mark this user as ${newStatus}?`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -54,109 +88,125 @@ const AdminUsers = () => {
       if (result.isConfirmed) {
         fetch(`http://localhost:5000/userStatus/${id}`, {
           method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ status: newStatus }),
         })
           .then((res) => res.json())
           .then((data) => {
             if (data.modifiedCount > 0) {
               refetch();
+              closeModal();
               Swal.fire({
                 title: "Updated!",
                 text: `The status has been changed to ${newStatus}`,
                 icon: "success",
               });
-
-              const updatedBlog = blogs.map((blog) =>
-                blog._id === id ? { ...blog, status: newStatus } : blog
-              );
-              setBlogs(updatedBlog);
             }
           });
       }
     });
   };
+
+  if (loading) {
+    return <h2 className="text-center text-xl font-semibold">Loading...</h2>;
+  }
+
   return (
-    <div>
+    <div className="p-6">
+      <h2 className="text-2xl font-bold text-center mb-4">Manage Users</h2>
       <div className="overflow-x-auto">
-        <table className="table">
-          {/* head */}
-          <thead>
+        <table className="table-auto w-full bg-white shadow-md rounded-lg overflow-hidden">
+          <thead className="bg-gray-800 text-white">
             <tr>
-              <th>Avatar</th>
-              <th>Email</th>
-              <th>Name</th>
-              <th>Role</th>
-              <th>Status</th>
-              <th>Actions</th>
+              <th className="py-2 px-4">Avatar</th>
+              <th className="py-2 px-4">Email</th>
+              <th className="py-2 px-4">Name</th>
+              <th className="py-2 px-4">Role</th>
+              <th className="py-2 px-4">Status</th>
+              <th className="py-2 px-4">Actions</th>
             </tr>
           </thead>
           <tbody>
-            {/* row 1 */}
             {users.map((user) => (
-              <tr key={user._id}>
-                <td key={user._id}>
-                  <div className="flex items-center gap-3">
-                    <div className="avatar">
-                      <div className="mask mask-squircle h-12 w-12">
-                        <img src={user?.photoURL} alt="Avatar " />
-                      </div>
-                    </div>
-                  </div>
+              <tr
+                key={user._id}
+                className="border-b hover:bg-gray-100 transition"
+              >
+                <td className="py-2 px-4 flex justify-center">
+                  <img
+                    src={user?.photoURL}
+                    alt="Avatar"
+                    className="h-12 w-12 rounded-full border"
+                  />
                 </td>
-                <td>{user?.email}</td>
-                <td>{user?.name}</td>
-                <td>{user?.role}</td>
-                <td>{user?.status}</td>
-                <td>
-                  <div className="dropdown dropdown-left dropdown-content">
-                    <div
-                      tabIndex={0}
-                      role="button"
-                      className="btn bg-red-800 text-white m-1"
-                    >
-                      ⚙️ Manage User
-                    </div>
-                    <ul
-                      tabIndex={0}
-                      className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
-                    >
-                      <li className="hover:bg-red-950 hover:text-white">
-                        <a onClick={() => handleMakeVolunteer(user)}>
-                          🏅 Make Volunteer
-                        </a>
-                      </li>
-                      <li className="hover:bg-red-950 hover:text-white">
-                        <a onClick={() => handleMakeAdmin(user)}>
-                          🏆 Make Admin
-                        </a>
-                      </li>
-                      {user?.status === "Active" && (
-                        <li
-                          onClick={() => handleStatusUp(user._id, "Blocked")}
-                          className="hover:bg-red-950 hover:text-white"
-                        >
-                          <a>🔒 Block User</a>
-                        </li>
-                      )}
-                      {user?.status === "Blocked" && (
-                        <li
-                          onClick={() => handleStatusUp(user._id, "Active")}
-                          className="hover:bg-red-950 hover:text-white"
-                        >
-                          <a>🔓 Unblock User</a>
-                        </li>
-                      )}
-                    </ul>
-                  </div>
+                <td className="py-2 px-4">{user?.email}</td>
+                <td className="py-2 px-4">{user?.name}</td>
+                <td className="py-2 px-4 font-semibold">{user?.role}</td>
+                <td className="py-2 px-4">
+                  <span
+                    className={`px-3 py-1 rounded-full text-white ${
+                      user?.status === "Active" ? "bg-green-500" : "bg-red-500"
+                    }`}
+                  >
+                    {user?.status}
+                  </span>
+                </td>
+                <td className="py-2 px-4">
+                  <button
+                    onClick={() => openModal(user)}
+                    className="px-3 py-1 0 text-white rounded-md text-2xl"
+                  >
+                    ⚙
+                  </button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+
+      {modalOpen && selectedUser && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-6 rounded-md shadow-md">
+            <h3 className="text-lg font-semibold">
+              Manage {selectedUser.name}
+            </h3>
+            <button
+              onClick={() => handleMakeVolunteer(selectedUser)}
+              className="block w-full text-left px-4 py-2 mt-2 bg-gray-200 hover:bg-gray-300"
+            >
+              🏅 Make Volunteer
+            </button>
+            <button
+              onClick={() => handleMakeAdmin(selectedUser)}
+              className="block w-full text-left px-4 py-2 mt-2 bg-gray-200 hover:bg-gray-300"
+            >
+              🏆 Make Admin
+            </button>
+            {selectedUser?.status === "Active" ? (
+              <button
+                onClick={() => handleStatusUpdate(selectedUser._id, "Blocked")}
+                className="block w-full text-left px-4 py-2 mt-2 bg-red-500 text-white hover:bg-red-600"
+              >
+                🔒 Block User
+              </button>
+            ) : (
+              <button
+                onClick={() => handleStatusUpdate(selectedUser._id, "Active")}
+                className="block w-full text-left px-4 py-2 mt-2 bg-green-500 text-white hover:bg-green-600"
+              >
+                🔓 Unblock User
+              </button>
+            )}
+            <button
+              onClick={closeModal}
+              className="block w-full text-left px-4 py-2 mt-2 bg-gray-300 hover:bg-gray-400"
+            >
+              ❌ Close
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

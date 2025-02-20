@@ -1,65 +1,68 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../Providers/AuthProvider";
 import { FaMoneyBill, FaUser } from "react-icons/fa";
 import { FaHandHoldingDroplet } from "react-icons/fa6";
 
 const AdminHome = () => {
-  const [donners, setDonner] = useState([]);
-  const [funds, setFund] = useState([]);
-  const [bloodreq, setBloodReq] = useState([]);
+  const [donors, setDonors] = useState([]);
+  const [funds, setFunds] = useState([]);
+  const [bloodReq, setBloodReq] = useState([]);
 
-  fetch(`http://localhost:5000/donor`)
-    .then((res) => res.json())
-    .then((donner) => setDonner(donner));
-  // -----------------------------------
-  fetch(`http://localhost:5000/fund`)
-    .then((res) => res.json())
-    .then((funds) => setFund(funds));
-  // ----------------------------------------
-  fetch(`http://localhost:5000/DonationRequrests`)
-    .then((res) => res.json())
-    .then((bloodreq) => setBloodReq(bloodreq));
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const donorRes = await fetch("http://localhost:5000/donor");
+        const donorData = await donorRes.json();
+        setDonors(donorData);
+
+        const fundRes = await fetch("http://localhost:5000/fund");
+        const fundData = await fundRes.json();
+        setFunds(fundData);
+
+        const bloodReqRes = await fetch(
+          "http://localhost:5000/DonationRequests"
+        );
+        const bloodReqData = await bloodReqRes.json();
+        setBloodReq(bloodReqData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchData();
+  }, []);
+
   const { user } = useContext(AuthContext);
-  return (
-    <div>
-      <h2 className="text-center text-4xl">
-        <span className="font-semibold">--{user?.displayName}</span> Sir,
-        Welcome to Admin Panel--
-      </h2>
-      <div className="mt-24 grid grid-cols-1 md:grid-cols-3 gap-4">
-        {/* card */}
 
-        {/* 1 */}
-        <div className="card w-8/12 h-64 bg-red-950  rounded-full ">
-          <h2 className="text-5xl text-white flex justify-center mt-4">
-            <FaUser></FaUser>
-          </h2>{" "}
-          <h2 className="text-2xl mt-4 text-white text-center">Donors</h2>
-          <h3 className="text-4xl mt-4 text-white text-center">
-            ---{donners.length} ---
-          </h3>
+  return (
+    <div className="px-4 md:px-12 lg:px-20 py-10">
+      <h2 className="text-center text-4xl font-semibold text-gray-800 mb-10">
+        <span className="text-red-600">{user?.displayName}</span> Sir, Welcome
+        to Admin Panel
+      </h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Donors Card */}
+        <div className="bg-gradient-to-r from-red-500 to-red-700 text-white p-6 rounded-2xl shadow-lg transform hover:scale-105 transition-transform">
+          <div className="flex flex-col items-center">
+            <FaUser className="text-6xl" />
+            <h2 className="text-2xl mt-4">Donors</h2>
+            <h3 className="text-5xl font-bold mt-2">{donors.length}</h3>
+          </div>
         </div>
-        {/* 2 */}
-        <div className="card w-8/12 h-64 bg-red-950  rounded-full ">
-          <h2 className="text-5xl text-white flex justify-center mt-4">
-            <FaMoneyBill></FaMoneyBill>
-          </h2>{" "}
-          <h2 className="text-2xl mt-4 text-white text-center">Funding</h2>
-          <h3 className="text-4xl mt-4 text-white text-center">
-            --- {funds.length} ---
-          </h3>
+        {/* Funding Card */}
+        <div className="bg-gradient-to-r from-green-500 to-green-700 text-white p-6 rounded-2xl shadow-lg transform hover:scale-105 transition-transform">
+          <div className="flex flex-col items-center">
+            <FaMoneyBill className="text-6xl" />
+            <h2 className="text-2xl mt-4">Funding</h2>
+            <h3 className="text-5xl font-bold mt-2">{funds.length}</h3>
+          </div>
         </div>
-        {/* 3 */}
-        <div className="card w-8/12 h-64 bg-red-950  rounded-full ">
-          <h2 className="text-5xl text-white flex justify-center mt-4">
-            <FaHandHoldingDroplet></FaHandHoldingDroplet>
-          </h2>{" "}
-          <h2 className="text-2xl mt-4 text-white text-center">
-            Blood Request
-          </h2>
-          <h3 className="text-4xl mt-4 text-white text-center">
-            --- {bloodreq.length} ---
-          </h3>
+        {/* Blood Requests Card */}
+        <div className="bg-gradient-to-r from-blue-500 to-blue-700 text-white p-6 rounded-2xl shadow-lg transform hover:scale-105 transition-transform">
+          <div className="flex flex-col items-center">
+            <FaHandHoldingDroplet className="text-6xl" />
+            <h2 className="text-2xl mt-4">Blood Requests</h2>
+            <h3 className="text-5xl font-bold mt-2">{bloodReq.length}</h3>
+          </div>
         </div>
       </div>
     </div>
