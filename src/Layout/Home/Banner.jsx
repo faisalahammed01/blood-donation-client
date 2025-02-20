@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import banner from "../../assets/banner.jpg";
 
 const Banner = () => {
@@ -35,7 +36,10 @@ const Banner = () => {
           </p>
 
           {/* 3D Blood Drip Button */}
-          <button className="relative px-6 py-3 md:px-8 md:py-4 text-base md:text-lg font-bold uppercase tracking-wider text-white transition-all duration-300 bg-gradient-to-r from-red-700 to-red-900 rounded-lg shadow-xl hover:shadow-red-500/50 transform hover:scale-105 hover:-translate-y-1">
+          <Link
+            to="singUp"
+            className="relative px-6 py-3 md:px-8 md:py-4 text-base md:text-lg font-bold uppercase tracking-wider text-white transition-all duration-300 bg-gradient-to-r from-red-700 to-red-900 rounded-lg shadow-xl hover:shadow-red-500/50 transform hover:scale-105 hover:-translate-y-1"
+          >
             <span className="relative z-10">Become a Donor</span>
 
             {/* Blood Dripping Effect */}
@@ -45,7 +49,7 @@ const Banner = () => {
 
             {/* Blood Glow Effect */}
             <span className="absolute top-0 left-0 w-full h-full bg-red-500 opacity-10 rounded-lg blur-lg animate-pulse"></span>
-          </button>
+          </Link>
         </div>
       </div>
     </div>

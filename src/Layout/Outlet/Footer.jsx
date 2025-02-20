@@ -1,6 +1,16 @@
 const Footer = () => {
   return (
-    <footer className="footer antialiased bg-white text-neutral-content p-10 border-y-2 border-black">
+    <footer className="relative footer antialiased bg-white text-neutral-content p-10 border-y-2 border-black">
+      {/* Multiple Blood Drops */}
+      <div className="absolute top-5 left-10 w-4 h-4 bg-red-600 rounded-full animate-bounce"></div>
+      <div className="absolute bottom-10 left-1/3 w-3 h-3 bg-red-700 rounded-full animate-bounce"></div>
+      <div className="absolute top-12 left-1/4 w-6 h-6 bg-red-500 rounded-full animate-pulse"></div>
+      <div className="absolute bottom-14 right-32 w-4 h-4 bg-red-700 rounded-full animate-bounce"></div>
+      <div className="absolute top-2/3 left-10 w-3 h-3 bg-red-500 rounded-full animate-ping"></div>
+      <div className="absolute top-1/3 right-10 w-5 h-5 bg-red-600 rounded-full animate-pulse"></div>
+      <div className="absolute bottom-6 left-1/6 w-4 h-4 bg-red-500 rounded-full animate-bounce"></div>
+      <div className="absolute bottom-20 right-5 w-3 h-3 bg-red-700 rounded-full animate-pulse"></div>
+
       <aside>
         <div>
           <img
@@ -11,6 +21,7 @@ const Footer = () => {
         </div>
         <p className="text-black text-xl">Saving lives, one drop at a time.</p>
       </aside>
+
       <nav>
         <h6 className="footer-title text-xl opacity-90 font-bold text-black">
           Social
