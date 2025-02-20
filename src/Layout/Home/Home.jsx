@@ -1,12 +1,14 @@
 import Banner from "./Banner";
 import ContactUs from "./ContactUs";
-import Featured from "./Featured";
+import WhyChooseUs from "./Featured";
+import SearchPage from "./SearchPage";
 
 const Home = () => {
   return (
     <div>
       <Banner></Banner>
-      <Featured></Featured>
+      <WhyChooseUs></WhyChooseUs>
+      <SearchPage></SearchPage>
       <ContactUs></ContactUs>
     </div>
   );
