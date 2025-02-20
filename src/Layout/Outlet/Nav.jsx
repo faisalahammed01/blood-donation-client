@@ -3,6 +3,7 @@ import logo from "../../assets/logo.png";
 import { useContext } from "react";
 import { AuthContext } from "../../Providers/AuthProvider";
 import { CiMenuKebab } from "react-icons/ci";
+
 const link = (
   <>
     <NavLink className="hover:text-red-600 font-semibold uppercase" to="/">
@@ -24,7 +25,7 @@ const Nav = () => {
   const { user, logOut } = useContext(AuthContext);
 
   return (
-    <div className="navbar bg-base-100 container mx-auto">
+    <div className="navbar bg-white dark:bg-gray-900 text-gray-900 dark:text-white container mx-auto">
       <div className="flex-1">
         {/* Dropdown for smaller screens */}
         <div className="dropdown dropdown-bottom lg:hidden">
@@ -33,7 +34,7 @@ const Nav = () => {
           </label>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+            className="menu menu-sm dropdown-content bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-box z-[1] mt-3 w-52 p-2 shadow"
           >
             {link}
             {user && (
@@ -88,11 +89,11 @@ const Nav = () => {
               </div>
               <ul
                 tabIndex={0}
-                className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+                className="menu menu-sm dropdown-content bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-box z-[1] mt-3 w-52 p-2 shadow"
               >
                 <li>
                   <Link
-                    className="hover:bg-red-500 hover:text-white"
+                    className="hover:bg-red-500 font-semibold uppercase hover:text-white"
                     to="dashboard"
                   >
                     Dashboard
@@ -100,7 +101,7 @@ const Nav = () => {
                 </li>
                 <li>
                   <button
-                    className="hover:bg-red-500 hover:text-white"
+                    className="hover:bg-red-500 font-semibold uppercase hover:text-white"
                     onClick={logOut}
                   >
                     logOut

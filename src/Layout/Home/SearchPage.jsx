@@ -14,9 +14,9 @@ const SearchPage = () => {
     register,
     handleSubmit,
     reset,
-
     formState: { errors },
   } = useForm();
+
   const { data: upazilas = [], isLoading } = useQuery({
     queryKey: ["Upazilas"],
     queryFn: async () => {
@@ -24,6 +24,7 @@ const SearchPage = () => {
       return res.data;
     },
   });
+
   const { data: districts = [] } = useQuery({
     queryKey: ["districts"],
     queryFn: async () => {
@@ -31,7 +32,8 @@ const SearchPage = () => {
       return res.data;
     },
   });
-  //  ------------------------- search donor-----------------
+
+  // ------------------------- search donor-----------------
   const handleSearch = (data) => {
     setIsSubmitted(true);
     const { District, Upazila, Blood } = data;
@@ -40,27 +42,30 @@ const SearchPage = () => {
       setdonner(res.data);
     });
   };
+
   return (
     <>
-      <h2 className="text-center font-bold text-4xl my-3">
+      <h2 className="text-center font-bold text-4xl my-3 text-white dark:text-gray-200">
         🔎 Search <span className="text-red-500">Blood</span> Donors
       </h2>
 
-      <div className="lg:w-3/4 mx-auto">
-        <div className="card bg-base-100 w-full shrink-0 shadow-md">
+      <div className="lg:w-3/4 mx-auto ">
+        <div className="card bg-base-100  dark:bg-black w-full shrink-0 shadow-md">
           <form onSubmit={handleSubmit(handleSearch)} className="card-body">
             {/* form second row */}
             <div className="flex flex-col lg:flex-row gap-5">
               <div className="form-control flex-1">
                 <label className="label">
-                  <span className="label-text">🩸Blood Group</span>
+                  <span className="label-text text-black dark:text-white">
+                    🩸Blood Group
+                  </span>
                 </label>
                 <select
                   defaultValue="default"
                   {...register("Blood", { required: true })}
                   name="Blood"
                   required
-                  className="select select-bordered w-full "
+                  className="select select-bordered w-full bg-white dark:bg-gray-700 text-black dark:text-white"
                 >
                   <option disabled value="default">
                     Select Blood Group
@@ -76,15 +81,18 @@ const SearchPage = () => {
                 </select>
               </div>
             </div>
+
             {/* form third row */}
             <div className="flex flex-col lg:flex-row gap-5">
               <div className="form-control flex-1">
                 <label className="label">
-                  <span className="label-text">Recipient-District</span>
+                  <span className="label-text text-black dark:text-white">
+                    Recipient-District
+                  </span>
                 </label>
                 <select
                   {...register("District", { required: true })}
-                  className="select select-bordered"
+                  className="select select-bordered bg-white dark:bg-gray-700 text-black dark:text-white"
                   name="District"
                   value={selectedDistricts}
                   onChange={(e) => setSelectedDistricts(e.target.value)}
@@ -100,14 +108,16 @@ const SearchPage = () => {
                   ))}
                 </select>
               </div>
-              {/*------------------------------//-------------------------------------------- */}
+
               <div className="form-control flex-1">
                 <label className="label">
-                  <span className="label-text">Recipient-Upazila</span>
+                  <span className="label-text text-black dark:text-white">
+                    Recipient-Upazila
+                  </span>
                 </label>
                 <select
                   {...register("Upazila", { required: true })}
-                  className="select select-bordered"
+                  className="select select-bordered bg-white dark:bg-gray-700 text-black dark:text-white"
                   name="Upazila"
                   value={selectedUpazila}
                   onChange={(e) => setSelectedUpazila(e.target.value)}
@@ -126,20 +136,20 @@ const SearchPage = () => {
             </div>
 
             <div className="form-control mt-6">
-              <button className="btn btn-outline text-white font-bold bg-red-800 hover:bg-red-950">
-                <FaSearch></FaSearch> Search
+              <button className="btn btn-outline text-white font-bold bg-red-600 hover:bg-red-950">
+                <FaSearch /> Search
               </button>
             </div>
           </form>
         </div>
-        {/* SeARCH */}
 
+        {/* SEARCH RESULTS */}
         {isSubmitted && (
-          <div className="mt-8 mb-8 border border-black p-11">
+          <div className="mt-8 mb-8 border border-black p-11 bg-white dark:bg-gray-800 text-black dark:text-white">
             <div className="mt-6">
               {donners.length > 0 ? (
                 <div className="overflow-x-auto">
-                  <table className="table">
+                  <table className="table text-black dark:text-white">
                     {/* head */}
                     <thead>
                       <tr>
@@ -152,7 +162,7 @@ const SearchPage = () => {
                     </thead>
 
                     <tbody>
-                      {/* row  */}
+                      {/* row */}
                       {donners.map((donner, i) => (
                         <tr key={donner._id}>
                           <td>{i + 1}</td>
@@ -166,8 +176,8 @@ const SearchPage = () => {
                   </table>
                 </div>
               ) : (
-                <h1 className="text-center text-red-500 font-bold text-3xl">
-                  No donner Found.
+                <h1 className="text-center text-red-900 font-bold text-3xl">
+                  No donor Found.
                 </h1>
               )}
             </div>
