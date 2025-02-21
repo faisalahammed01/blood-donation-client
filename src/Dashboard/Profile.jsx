@@ -60,7 +60,7 @@ const Profile = () => {
     updatedData.image = imageUrl;
 
     const response = await axios.patch(
-      `https://blood-donation-server-eta-eight.vercel.app/users/profile/${user?.email}`,
+      `http://localhost:5000/users/profile/${user?.email}`,
       updatedData
     );
     if (response.data.modifiedCount > 0) {
@@ -78,6 +78,13 @@ const Profile = () => {
 
   return (
     <div className="lg:w-3/4 mx-auto">
+      <div>
+        <h2 className="text-2xl text-center bg-black glass text-white py-2 rounded-lg ">
+          {" "}
+          Welcome {user?.displayName}
+        </h2>
+        <div className="divider "></div>
+      </div>
       <div className="text-center p-10">
         <img
           className="size-40  border-4 mx-auto  border-black"

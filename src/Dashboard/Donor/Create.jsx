@@ -35,26 +35,21 @@ const Create = () => {
   //   --------------------------------------------------------------------------------------
   const onSubmit = (data) => {
     data.status = "pending";
-    axios
-      .post(
-        "https://blood-donation-server-eta-eight.vercel.app/recipient",
-        data
-      )
-      .then((res) => {
-        if (res.data.insertedId) {
-          reset();
-          Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: " Created Donation Request Successfully",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-        }
-      });
+    axios.post("http://localhost:5000/recipient", data).then((res) => {
+      if (res.data.insertedId) {
+        reset();
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: " Created Donation Request Successfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    });
   };
   useEffect(() => {
-    fetch(`https://blood-donation-server-eta-eight.vercel.app/user/Block`)
+    fetch(`http://localhost:5000/user/Block`)
       .then((res) => res.json())
       .then((Users) => setUsers(Users));
   }, []);
@@ -62,6 +57,12 @@ const Create = () => {
 
   return (
     <>
+      <div>
+        <h2 className="text-2xl text-center bg-gray-50 shadow-xl glass text-black py-2 rounded-lg ">
+          Create and Publish a New Blood Request
+        </h2>
+        <div className="divider "></div>
+      </div>
       {Login?.status === "Active" && (
         <div className="lg:w-3/4 mx-auto">
           <div className="card bg-base-100 w-full shrink-0 shadow-2xl">

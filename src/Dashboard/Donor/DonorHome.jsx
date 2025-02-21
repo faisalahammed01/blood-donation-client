@@ -1,8 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../Providers/AuthProvider";
-import { FaEdit, FaEye, FaTrash } from "react-icons/fa";
 import Swal from "sweetalert2";
-import { Link } from "react-router-dom";
 
 const DonorHome = () => {
   const [donners, setDonner] = useState([]);
@@ -21,12 +19,9 @@ const DonorHome = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         //   ----------Delete from the database--------
-        fetch(
-          `https://blood-donation-server-eta-eight.vercel.app/donationDelete/${id}`,
-          {
-            method: "DELETE",
-          }
-        )
+        fetch(`http://localhost:5000/donationDelete/${id}`, {
+          method: "DELETE",
+        })
           .then((res) => res.json())
           .then((data) => {
             if (data.deletedCount) {
@@ -58,16 +53,13 @@ const DonorHome = () => {
       confirmButtonText: `Yes, ${newStatus}!`,
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(
-          `https://blood-donation-server-eta-eight.vercel.app/upDonationStatus/${id}`,
-          {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ status: newStatus }),
-          }
-        )
+        fetch(`http://localhost:5000/upDonationStatus/${id}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ status: newStatus }),
+        })
           .then((res) => res.json())
           .then((data) => {
             if (data.modifiedCount > 0) {
@@ -91,9 +83,7 @@ const DonorHome = () => {
 
   useEffect(() => {
     if (user?.email) {
-      fetch(
-        `https://blood-donation-server-eta-eight.vercel.app/MyDonation?email=${user.email}`
-      )
+      fetch(`http://localhost:5000/myDonor?email=${user.email}`)
         .then((res) => res.json())
         .then((donner) => setDonner(donner));
     }
@@ -101,9 +91,8 @@ const DonorHome = () => {
   return (
     <>
       <div>
-        <h2 className="text-2xl text-center bg-black glass text-white py-2 rounded-lg my-4">
-          {" "}
-          Welcome {user?.displayName}
+        <h2 className="text-2xl text-center bg-gray-50 shadow-xl glass text-black py-2 rounded-lg ">
+          Information of Donors & Requesters
         </h2>
         <div className="divider "></div>
       </div>
@@ -122,8 +111,7 @@ const DonorHome = () => {
               <th>Date</th>
               <th>Time</th>
               <th>Blood Group</th>
-              <th>Status</th>
-              <th>Actions</th>
+              <th className="font-bold text-red-500">Donor Number</th>
             </tr>
           </thead>
 
@@ -132,57 +120,17 @@ const DonorHome = () => {
             {donners.map((donner, i) => (
               <tr key={donner._id}>
                 <td>{i + 1}</td>
-                <td>{donner?.recipientName}</td>
-                <td>{donner?.hospitalName}</td>
+                <td>{donner?.RecipientName}</td>
+                <td>{donner?.HospitalName}</td>
                 <td>{donner?.date}</td>
                 <td>{donner?.time}</td>
                 <td>{donner?.Blood}</td>
-                <td className="font-bold">{donner?.status}</td>
-                <td className=" px-4 py-2 flex gap-2">
-                  {donner.status === "pending" && (
-                    <>
-                      <Link
-                        to={`/dashboard/update/${donner._id}`}
-                        className="bg-blue-500 text-white px-2 py-1 rounded"
-                      >
-                        <FaEdit></FaEdit>
-                      </Link>
-                      <button
-                        onClick={() => handleUserDelete(donner._id)}
-                        className="bg-red-500 text-white px-2 py-1 rounded"
-                      >
-                        <FaTrash></FaTrash>
-                      </button>
-                    </>
-                  )}
-                  {donner.status === "inprogress" && (
-                    <>
-                      <button
-                        onClick={() => handleStatusUp(donner._id, "done")}
-                        className="bg-green-500 text-white px-2 py-1 rounded"
-                      >
-                        Done
-                      </button>
-                      <button
-                        onClick={() => handleStatusUp(donner._id, "cancelled")}
-                        className="bg-gray-500 text-white px-2 py-1 rounded"
-                      >
-                        Cancel
-                      </button>
-                    </>
-                  )}
-                </td>
+                <td className="font-bold text-red-800">{donner?.number}</td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-      <Link
-        to="/dashboard/DonorMy"
-        className=" my-4 ml-4 text-black btn btn-link text-xl uppercase "
-      >
-        view all request
-      </Link>
     </>
   );
 };

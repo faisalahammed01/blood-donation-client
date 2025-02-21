@@ -90,7 +90,14 @@ const Register = () => {
     return <span className="loading loading-spinner loading-lg"></span>;
 
   return (
-    <div className="lg:w-3/4 mx-auto">
+    <div className="lg:w-3/4 mx-auto relative">
+      {/* Loading Spinner */}
+      {isSubmitting && (
+        <div className="absolute inset-0 bg-opacity-50 bg-black flex justify-center items-center z-50">
+          <div className="w-16 h-16 border-8 border-t-8 border-gray-200 rounded-full animate-spin border-t-red-500"></div>
+        </div>
+      )}
+
       <div className="text-center p-10">
         <img
           className="size-36"

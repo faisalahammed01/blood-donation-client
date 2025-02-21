@@ -1,4 +1,7 @@
+import { useState } from "react";
 import {
+  FaBars,
+  FaTimes,
   FaUser,
   FaTint,
   FaHome,
@@ -14,92 +17,112 @@ import UseVolunteer from "./Volunteer/Usevolunteer";
 const Dashboard = () => {
   const [isAdmin] = UseAdmin();
   const [isVolunteer] = UseVolunteer();
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div className="flex">
-      {/* SIDE-BAR */}
-      <div className="w-64 min-h-screen bg-red-700 p-5">
-        <ul className="menu space-y-2">
+      {/* Sidebar */}
+      <div
+        className={`w-64 h-screen  bg-red-700 p-5 lg:translate-x-0 ${
+          isOpen
+            ? "translate-x-0 fixed top-0 left-0 h-full z-50 shadow-lg"
+            : "-translate-x-64 fixed top-0 left-0 h-full z-50 shadow-lg"
+        } transition-transform duration-300 lg:relative lg:flex`}
+      >
+        <button
+          className="absolute top-4 right-4 text-white text-2xl lg:hidden"
+          onClick={() => setIsOpen(false)}
+        >
+          <FaTimes />
+        </button>
+        <ul className="space-y-4 text-white mt-8">
           {isAdmin ? (
             <>
-              {/*-=---------------------------- ADMIN--------------- */}
               <li>
-                <Link to="adminHome" className="text-white">
-                  <FaHome></FaHome> Admin Dashboard
+                <Link to="adminHome" className="flex items-center gap-2">
+                  <FaHome /> <span>Admin Dashboard</span>
                 </Link>
               </li>
               <li>
-                <Link to="AdminUsers" className="text-white">
-                  <FaUsers></FaUsers> Manage Users
+                <Link to="AdminUsers" className="flex items-center gap-2">
+                  <FaUsers /> <span>Manage Users</span>
                 </Link>
               </li>
               <li>
-                <Link to="AdminRequest" className="text-white">
-                  <FaTint></FaTint> All Blood Requests
+                <Link to="AdminRequest" className="flex items-center gap-2">
+                  <FaTint /> <span>All Blood Requests</span>
                 </Link>
               </li>
               <li>
-                <Link to="AdminBlogs" className="text-white">
-                  <FaBlog></FaBlog> Manage Blogs
+                <Link to="AdminBlogs" className="flex items-center gap-2">
+                  <FaBlog /> <span>Manage Blogs</span>
                 </Link>
               </li>
             </>
           ) : isVolunteer ? (
             <>
-              {/* -------------------------------Volunteer--------------------------------------- */}
               <li>
-                <Link to="volunteerHome" className="text-white">
-                  <FaHome></FaHome> Volunteer Dashboard
+                <Link to="volunteerHome" className="flex items-center gap-2">
+                  <FaHome /> <span>Volunteer Dashboard</span>
                 </Link>
               </li>
               <li>
-                <Link to="volunteerRequest" className="text-white">
-                  <FaTint></FaTint> Blood Requests
+                <Link to="volunteerRequest" className="flex items-center gap-2">
+                  <FaTint /> <span>Blood Requests</span>
                 </Link>
               </li>
               <li>
-                <Link to="volunteerManagement" className="text-white">
-                  <FaBlog></FaBlog> Content Management
+                <Link
+                  to="volunteerManagement"
+                  className="flex items-center gap-2"
+                >
+                  <FaBlog /> <span>Content Management</span>
                 </Link>
               </li>
             </>
           ) : (
             <>
-              {/* -------------------------------Donor--------------------------------- */}
               <li>
-                <Link to="Home" className="text-white">
-                  <FaHome></FaHome> Donor Dashboard
+                <Link to="Home" className="flex items-center gap-2">
+                  <FaHome /> <span>Donor information</span>
                 </Link>
               </li>
               <li>
-                <Link to="DonorMy" className="text-white">
-                  <FaList></FaList> My Donation Requests
+                <Link to="DonorMy" className="flex items-center gap-2">
+                  <FaList /> <span>My Donation Requests</span>
                 </Link>
               </li>
               <li>
-                <Link to="DonorCreate" className="text-white">
-                  <FaPlus></FaPlus> Create Donation Request
+                <Link to="DonorCreate" className="flex items-center gap-2">
+                  <FaPlus /> <span>Create Donation Request</span>
                 </Link>
               </li>
             </>
           )}
-          {/*-------------------------- Common Links---------------------------- */}
-          <div className="divider divider-info"></div>
+          <div className="border-t border-white my-4"></div>
           <li>
-            <Link to="/" className="text-white">
-              <FaHome></FaHome> Home
+            <Link to="/" className="flex items-center gap-2">
+              <FaHome /> <span>Home</span>
             </Link>
           </li>
           <li>
-            <Link to="profile" className="text-white">
-              <FaUser></FaUser> Profile
+            <Link to="profile" className="flex items-center gap-2">
+              <FaUser /> <span>Profile</span>
             </Link>
           </li>
         </ul>
       </div>
-      <div className="flex-1 p-8">
-        {/*----------------------------- DASHBOARD CONTENT------------------------------ */}
-        <Outlet></Outlet>
+
+      {/* Main Content */}
+      <div className="flex-1 p-6">
+        {/* Sidebar Toggle Button */}
+        <button
+          className="text-red-700 text-2xl p-2 focus:outline-none lg:hidden"
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          <FaBars />
+        </button>
+        <Outlet />
       </div>
     </div>
   );

@@ -1,14 +1,14 @@
-import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaSearch } from "react-icons/fa";
+import { LuPaintbrush } from "react-icons/lu";
 
 const SearchPage = () => {
-  const [donners, setdonner] = useState([]);
-  const [selectedUpazila, setSelectedUpazila] = useState("");
-  const [selectedDistricts, setSelectedDistricts] = useState("");
+  const [donners, setDonner] = useState([]);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const {
     register,
@@ -17,34 +17,30 @@ const SearchPage = () => {
     formState: { errors },
   } = useForm();
 
-  const { data: upazilas = [], isLoading } = useQuery({
-    queryKey: ["Upazilas"],
-    queryFn: async () => {
-      const res = await axios.get("/upazilas.json");
-      return res.data;
-    },
-  });
-
-  const { data: districts = [] } = useQuery({
-    queryKey: ["districts"],
-    queryFn: async () => {
-      const res = await axios.get("/districts.json");
-      return res.data;
-    },
-  });
-
   // ------------------------- search donor-----------------
-  const handleSearch = (data) => {
+  const handleSearch = async (data) => {
     setIsSubmitted(true);
-    const { District, Upazila, Blood } = data;
-    const query = `District=${District}&Upazila=${Upazila}&Blood=${Blood}`;
-    axios
-      .get(
-        `https://blood-donation-server-eta-eight.vercel.app/searchDonor?${query}`
-      )
-      .then((res) => {
-        setdonner(res.data);
-      });
+    setLoading(true);
+    setError("");
+
+    const queryParams = new URLSearchParams(data).toString(); // Dynamic query creation
+
+    try {
+      const res = await axios.get(
+        `http://localhost:5000/searchDonor?${queryParams}`
+      );
+      setDonner(res.data);
+    } catch (error) {
+      setError("Failed to fetch data. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleClear = () => {
+    reset();
+    setIsSubmitted(false);
+    setDonner([]);
   };
 
   return (
@@ -53,8 +49,8 @@ const SearchPage = () => {
         🔎 Search <span className="text-red-500">Blood</span> Donors
       </h2>
 
-      <div className="lg:w-3/4 mx-auto ">
-        <div className="card bg-base-100  dark:bg-black w-full shrink-0 shadow-md">
+      <div className="lg:w-3/4 mx-auto">
+        <div className="card bg-base-100 dark:bg-black w-full shrink-0 shadow-md">
           <form onSubmit={handleSubmit(handleSearch)} className="card-body">
             {/* form second row */}
             <div className="flex flex-col lg:flex-row gap-5">
@@ -66,9 +62,8 @@ const SearchPage = () => {
                 </label>
                 <select
                   defaultValue="default"
-                  {...register("Blood", { required: true })}
-                  name="Blood"
-                  required
+                  {...register("bloodGroup", { required: true })}
+                  name="bloodGroup"
                   className="select select-bordered w-full bg-white dark:bg-gray-700 text-black dark:text-white"
                 >
                   <option disabled value="default">
@@ -94,23 +89,11 @@ const SearchPage = () => {
                     Recipient-District
                   </span>
                 </label>
-                <select
-                  {...register("District", { required: true })}
-                  className="select select-bordered bg-white dark:bg-gray-700 text-black dark:text-white"
-                  name="District"
-                  value={selectedDistricts}
-                  onChange={(e) => setSelectedDistricts(e.target.value)}
-                  required
-                >
-                  <option value="" disabled>
-                    Select District
-                  </option>
-                  {districts.map((district) => (
-                    <option key={district.id} value={district.name}>
-                      {district.name}
-                    </option>
-                  ))}
-                </select>
+                <input
+                  {...register("district", { required: true })}
+                  className="input input-bordered w-full bg-white dark:bg-gray-700 text-black dark:text-white"
+                  name="district"
+                />
               </div>
 
               <div className="form-control flex-1">
@@ -119,29 +102,27 @@ const SearchPage = () => {
                     Recipient-Upazila
                   </span>
                 </label>
-                <select
-                  {...register("Upazila", { required: true })}
-                  className="select select-bordered bg-white dark:bg-gray-700 text-black dark:text-white"
-                  name="Upazila"
-                  value={selectedUpazila}
-                  onChange={(e) => setSelectedUpazila(e.target.value)}
-                  required
-                >
-                  <option value="" disabled>
-                    Select Upazila
-                  </option>
-                  {upazilas.map((upazila) => (
-                    <option key={upazila.id} value={upazila.name}>
-                      {upazila.name}
-                    </option>
-                  ))}
-                </select>
+                <input
+                  {...register("upazila", { required: true })}
+                  className="input input-bordered w-full bg-white dark:bg-gray-700 text-black dark:text-white"
+                  name="upazila"
+                />
               </div>
             </div>
 
             <div className="form-control mt-6">
-              <button className="btn btn-outline text-white font-bold bg-red-600 hover:bg-red-950">
+              <button
+                type="submit"
+                className="btn btn-outline text-white font-bold bg-red-600 hover:bg-red-950"
+              >
                 <FaSearch /> Search
+              </button>
+              <button
+                type="button"
+                onClick={handleClear}
+                className="text-3xl mt-3"
+              >
+                <LuPaintbrush></LuPaintbrush>
               </button>
             </div>
           </form>
@@ -151,7 +132,15 @@ const SearchPage = () => {
         {isSubmitted && (
           <div className="mt-8 mb-8 border border-black p-11 bg-white dark:bg-gray-800 text-black dark:text-white">
             <div className="mt-6">
-              {donners.length > 0 ? (
+              {loading ? (
+                <h1 className="text-center text-blue-500 font-bold text-3xl">
+                  Loading...
+                </h1>
+              ) : error ? (
+                <h1 className="text-center text-red-500 font-bold text-3xl">
+                  {error}
+                </h1>
+              ) : donners.length > 0 ? (
                 <div className="overflow-x-auto">
                   <table className="table text-black dark:text-white">
                     {/* head */}
@@ -170,10 +159,10 @@ const SearchPage = () => {
                       {donners.map((donner, i) => (
                         <tr key={donner._id}>
                           <td>{i + 1}</td>
-                          <td>{donner?.RecipientName}</td>
-                          <td>{donner?.recipientLocation}</td>
+                          <td>{donner?.name}</td>
+                          <td>{donner?.location}</td>
                           <td>{donner?.email}</td>
-                          <td>{donner?.number}</td>
+                          <td>{donner?.phone}</td>
                         </tr>
                       ))}
                     </tbody>
