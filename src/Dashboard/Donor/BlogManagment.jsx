@@ -31,11 +31,14 @@ const BlogManagment = () => {
     if (imageUploadResponse.data.success) {
       data.image = imageUploadResponse.data.data.url;
 
-      const res = await axios.post("http://localhost:5000/blog", {
-        ...data,
-        content,
-        status: "draft",
-      });
+      const res = await axios.post(
+        "https://blood-donation-server-eta-eight.vercel.app/blog",
+        {
+          ...data,
+          content,
+          status: "draft",
+        }
+      );
 
       if (res.data.insertedId) {
         reset();

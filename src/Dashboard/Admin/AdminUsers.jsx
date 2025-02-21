@@ -29,7 +29,9 @@ const AdminUsers = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .patch(`http://localhost:5000/users/admin/${user._id}`)
+          .patch(
+            `https://blood-donation-server-eta-eight.vercel.app/users/admin/${user._id}`
+          )
           .then((res) => {
             if (res.data.modifiedCount > 0) {
               refetch();
@@ -58,7 +60,9 @@ const AdminUsers = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .patch(`http://localhost:5000/users/volunteer/${user._id}`)
+          .patch(
+            `https://blood-donation-server-eta-eight.vercel.app/users/volunteer/${user._id}`
+          )
           .then((res) => {
             if (res.data.modifiedCount > 0) {
               refetch();
@@ -86,11 +90,14 @@ const AdminUsers = () => {
       confirmButtonText: `Yes, ${newStatus}!`,
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:5000/userStatus/${id}`, {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ status: newStatus }),
-        })
+        fetch(
+          `https://blood-donation-server-eta-eight.vercel.app/userStatus/${id}`,
+          {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ status: newStatus }),
+          }
+        )
           .then((res) => res.json())
           .then((data) => {
             if (data.modifiedCount > 0) {

@@ -60,7 +60,7 @@ const Profile = () => {
     updatedData.image = imageUrl;
 
     const response = await axios.patch(
-      `http://localhost:5000/users/profile/${user?.email}`,
+      `https://blood-donation-server-eta-eight.vercel.app/users/profile/${user?.email}`,
       updatedData
     );
     if (response.data.modifiedCount > 0) {
