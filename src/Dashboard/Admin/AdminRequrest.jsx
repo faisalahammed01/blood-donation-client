@@ -32,9 +32,12 @@ const AdminRequest = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:5000/donationDeletee/${currentDonnerId}`, {
-          method: "DELETE",
-        })
+        fetch(
+          `https://blood-donation-server-eta-eight.vercel.app/donationDeletee/${currentDonnerId}`,
+          {
+            method: "DELETE",
+          }
+        )
           .then((res) => res.json())
           .then((data) => {
             if (data.deletedCount) {
@@ -66,13 +69,16 @@ const AdminRequest = () => {
       confirmButtonText: `Yes, ${newStatus}!`,
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:5000/upDonationStatuss/${currentDonnerId}`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ status: newStatus }),
-        })
+        fetch(
+          `https://blood-donation-server-eta-eight.vercel.app/upDonationStatuss/${currentDonnerId}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ status: newStatus }),
+          }
+        )
           .then((res) => res.json())
           .then((data) => {
             if (data.modifiedCount > 0) {
@@ -96,7 +102,9 @@ const AdminRequest = () => {
   };
 
   useEffect(() => {
-    fetch(`http://localhost:5000/DonationRequrestAdmin`)
+    fetch(
+      `https://blood-donation-server-eta-eight.vercel.app/DonationRequrestAdmin`
+    )
       .then((res) => res.json())
       .then((donner) => setDonner(donner));
   }, []);

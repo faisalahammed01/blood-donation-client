@@ -31,9 +31,12 @@ const Details = () => {
 
   useEffect(() => {
     if (!_id) return;
-    axios.put(`http://localhost:5000/DonationUpStatus/${_id}`, {
-      status: "inprogress",
-    });
+    axios.put(
+      `https://blood-donation-server-eta-eight.vercel.app/DonationUpStatus/${_id}`,
+      {
+        status: "inprogress",
+      }
+    );
   }, [_id]);
 
   const [isConfirm, setConfirm] = useState(false);
@@ -43,14 +46,19 @@ const Details = () => {
     setConfirm(true);
     formData.status = "pending";
 
-    axios.post("http://localhost:5000/donor", formData).then((res) => {
-      if (res.data.insertedId) {
-        reset();
-        toast.success(
-          "Your blood donation request has been successfully submitted! Thank you for your generosity."
-        );
-      }
-    });
+    axios
+      .post(
+        "https://blood-donation-server-eta-eight.vercel.app/donor",
+        formData
+      )
+      .then((res) => {
+        if (res.data.insertedId) {
+          reset();
+          toast.success(
+            "Your blood donation request has been successfully submitted! Thank you for your generosity."
+          );
+        }
+      });
   };
 
   return (
@@ -108,145 +116,27 @@ const Details = () => {
             Donor Information
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text text-red-800">Donor Name</span>
-              </label>
-              <input
-                {...register("name", { required: true })}
-                type="text"
-                value={user?.displayName}
-                readOnly
-                className="input input-bordered"
-              />
-            </div>
-
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text text-red-800">Donor Email</span>
-              </label>
-              <input
-                {...register("email", { required: true })}
-                type="text"
-                value={user?.email}
-                readOnly
-                className="input input-bordered"
-              />
-            </div>
-
-            <div className="form-control col-span-2">
-              <label className="label">
-                <span className="label-text text-red-800">
-                  Donor Contact Number
-                </span>
-              </label>
-              <input
-                {...register("number", {
-                  required: "Contact number is required",
-                  pattern: {
-                    value: /^[0-9]{11}$/,
-                    message: "Contact number must be exactly 11 digits",
-                  },
-                })}
-                type="text"
-                placeholder="Enter contact number"
-                className="input input-bordered"
-              />
-              {errors.number && (
-                <p className="text-red-600">{errors.number.message}</p>
-              )}
-            </div>
-
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Recipient Name</span>
-              </label>
-              <input
-                {...register("RecipientName", { required: true })}
-                type="text"
-                value={recipientName}
-                readOnly
-                className="input input-bordered"
-              />
-            </div>
-
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Recipient Location</span>
-              </label>
-              <input
-                {...register("recipientLocation", { required: true })}
-                type="text"
-                value={address}
-                readOnly
-                className="input input-bordered"
-              />
-            </div>
-
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Hospital Name</span>
-              </label>
-              <input
-                {...register("HospitalName", { required: true })}
-                type="text"
-                value={hospitalName}
-                readOnly
-                className="input input-bordered"
-              />
-            </div>
-
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Blood Group</span>
-              </label>
-              <input
-                {...register("Blood", { required: true })}
-                type="text"
-                value={Blood}
-                readOnly
-                className="input input-bordered"
-              />
-            </div>
-
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Date</span>
-              </label>
-              <input
-                {...register("date", { required: true })}
-                type="date"
-                value={date}
-                readOnly
-                className="input input-bordered"
-              />
-            </div>
-
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Time</span>
-              </label>
-              <input
-                {...register("time", { required: true })}
-                type="time"
-                value={time}
-                readOnly
-                className="input input-bordered"
-              />
-            </div>
-
-            <div className="form-control col-span-2">
-              <label className="label">
-                <span className="label-text">Additional Notes</span>
-              </label>
-              <input
-                {...register("Notes")}
-                type="text"
-                placeholder="---Optional---"
-                className="input input-bordered"
-              />
-            </div>
+          <div className="form-control col-span-2">
+            <label className="label">
+              <span className="label-text text-red-800">
+                Donor Contact Number
+              </span>
+            </label>
+            <input
+              {...register("number", {
+                required: "Contact number is required",
+                pattern: {
+                  value: /^[0-9]{11}$/,
+                  message: "Contact number must be exactly 11 digits",
+                },
+              })}
+              type="text"
+              placeholder="Enter contact number"
+              className="input input-bordered"
+            />
+            {errors.number && (
+              <p className="text-red-600">{errors.number.message}</p>
+            )}
           </div>
 
           <div className="modal-action flex justify-between mt-4">

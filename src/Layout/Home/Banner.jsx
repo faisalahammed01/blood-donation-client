@@ -35,7 +35,7 @@ const Banner = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:5000/donors",
+        "https://blood-donation-server-eta-eight.vercel.app/donors",
         formData
       );
 

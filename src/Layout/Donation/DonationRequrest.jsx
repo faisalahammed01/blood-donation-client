@@ -9,7 +9,7 @@ const DonationRequest = () => {
   const [viewMode, setViewMode] = useState("table");
 
   useEffect(() => {
-    fetch(`http://localhost:5000/DonationRequrest`)
+    fetch(`https://blood-donation-server-eta-eight.vercel.app/DonationRequrest`)
       .then((res) => res.json())
       .then((donner) => setDonner(donner));
   }, []);

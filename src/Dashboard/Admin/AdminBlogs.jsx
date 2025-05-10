@@ -8,7 +8,9 @@ const AdminBlogs = () => {
   const [blogs, setBlogs] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/blog").then((res) => setBlogs(res.data));
+    axios
+      .get("https://blood-donation-server-eta-eight.vercel.app/blog")
+      .then((res) => setBlogs(res.data));
   }, []);
 
   const handleBlogDelete = (id) => {
@@ -22,7 +24,10 @@ const AdminBlogs = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:5000/blogs/${id}`, { method: "DELETE" })
+        fetch(
+          `https://blood-donation-server-eta-eight.vercel.app/blogs/${id}`,
+          { method: "DELETE" }
+        )
           .then((res) => res.json())
           .then((data) => {
             if (data.deletedCount) {
@@ -45,11 +50,14 @@ const AdminBlogs = () => {
       confirmButtonText: `Yes, ${newStatus}!`,
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:5000/blogStatus/${id}`, {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ status: newStatus }),
-        })
+        fetch(
+          `https://blood-donation-server-eta-eight.vercel.app/blogStatus/${id}`,
+          {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ status: newStatus }),
+          }
+        )
           .then((res) => res.json())
           .then((data) => {
             if (data.modifiedCount > 0) {
